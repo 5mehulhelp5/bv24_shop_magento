@@ -31,17 +31,13 @@ $verpackungseinheit = $product->getAttributeText('verpackungseinheit');
 $masseinheit = $product->getAttributeText('masseinheit');
 $preis = (float) $priceModel->getAmount()->getValue();
 
-if ($inhalt > 0 && $grundeinheit > 0) {
-    $preisProEinheit = round($preis / ($inhalt * $grundeinheit), 2);
-?>
-    <span class="price-per-unit">
-        <?= __('%1 € pro %2', number_format($preisProEinheit, 2, ',', '.'), $masseinheit) ?>
-    </span>
-<?php
-}
+
 
 // Attribut-Code anpassen!
 ?>
+
+
+
 <?php if ($block->hasSpecialPrice()) : ?>
 
     <!-- mawa: price per unit -->
@@ -49,12 +45,18 @@ if ($inhalt > 0 && $grundeinheit > 0) {
         $preisProEinheit = round($preis / ($inhalt * $grundeinheit), 2);
     ?>
         <span class="price-per-unit">
-            <?= __('%1 € pro %2', number_format($preisProEinheit, 2, ',', '.'), $masseinheit) ?>
+            <?= __('%1 €', number_format($preisProEinheit, 2, ',', '.')) ?>
+        </span>
+        <span class="price-unit">
+            <?= __('pro %1', $masseinheit) ?>
+        </span>
+        <span class="price-unit-after" >
+            entspricht
         </span>
     <?php } ?>
     <!-- ** -->
 
-    <span class="special-price">
+    <span class="special-price"
         <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
             'display_label'     => __('Special Price'),
             'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
@@ -84,13 +86,24 @@ if ($inhalt > 0 && $grundeinheit > 0) {
         <!-- mawa: price per unit -->
         <?php if ($verpackungseinheit): ?>
             <span class="price-per-unit-hint">
-                <?= __('pro %1', $verpackungseinheit) ?>
+                <?= __(' pro %1', $verpackungseinheit) ?>
             </span>
         <?php endif; ?>
         <!-- ** -->
 
     </span>
 <?php else : ?>
+
+    <!-- mawa: price per unit -->
+    <?php if ($inhalt > 0 && $grundeinheit > 0) {
+        $preisProEinheit = round($preis / ($inhalt * $grundeinheit), 2);
+    ?>
+        <span class="price-per-unit">
+            <?= __('%1 € pro %2', number_format($preisProEinheit, 2, ',', '.'), $masseinheit) ?>
+        </span>
+    <?php } ?>
+    <!-- ** -->
+
     <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
         'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
         'price_type'        => 'finalPrice',
@@ -108,7 +121,7 @@ if ($inhalt > 0 && $grundeinheit > 0) {
 
 <?php endif; ?>
 
-<!-- mawa: price per unit -->
+<!-- mawa: tax notice -->
 <div class="price-tax-hint">
     <?= __('inkl. Mehrwertsteuer') ?>
 </div>
@@ -116,6 +129,7 @@ if ($inhalt > 0 && $grundeinheit > 0) {
 
 
 <?php if ($block->showMinimalPrice()) : ?>
+
     <?php if ($block->getUseLinkForAsLowAs()) : ?>
         <a href="<?= $block->escapeUrl($block->getSaleableItem()->getProductUrl()) ?>" class="minimal-price-link">
             <?= /* @noEscape */ $block->renderAmountMinimal() ?>

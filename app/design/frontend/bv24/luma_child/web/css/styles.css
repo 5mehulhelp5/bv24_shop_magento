@@ -21,7 +21,9 @@ body {
 
 }
 
-.page-main a, .page-main .alink, .page-main a:visited {
+.page-main a,
+.page-main .alink,
+.page-main a:visited {
     color: #990052 !important;
     text-decoration: none;
 }
@@ -32,7 +34,8 @@ body {
 
 } */
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     box-shadow: 0 0 4px 1px #99005280 !important;
     /* Beispiel: Magenta-Schatten, leicht transparent */
     outline: none;
@@ -259,11 +262,37 @@ print {
 
 /* product box */
 
-.product-item{
-        border: 0.2rem solid #990052 !important;
+.product-item {
+    border: 0.2rem solid #990052 !important;
 
 }
 
-.fotorama__thumb-border{
+.fotorama__thumb-border {
     border-color: #990052 !important;
 }
+
+
+/* product price */
+
+.price-box .price-container .price, .price-per-unit {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 22px;
+}
+
+@media (min-width: 768px),
+print {
+
+    .product-options-bottom .price-box .price-container .price,
+    .product-info-price .price-box .price-container .price, .price-per-unit {
+        font-size: 36px;
+        line-height: 36px;
+    }
+}
+
+.price-unit-after{
+    display: block;
+}
+
+
+
