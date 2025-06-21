@@ -1,0 +1,128 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magento\Catalog\Pricing\Render\FinalPriceBox $block */
+
+/** ex: \Magento\Catalog\Pricing\Price\RegularPrice */
+/** @var \Magento\Framework\Pricing\Price\PriceInterface $priceModel */
+$priceModel = $block->getPriceType('regular_price');
+
+/** ex: \Magento\Catalog\Pricing\Price\FinalPrice */
+/** @var \Magento\Framework\Pricing\Price\PriceInterface $finalPriceModel */
+$finalPriceModel = $block->getPriceType('final_price');
+$idSuffix = $block->getIdSuffix() ? $block->getIdSuffix() : '';
+$schema = ($block->getZone() == 'item_view') ? true : false;
+
+$product = $block->getSaleableItem();
+
+// Hole die Werte für Inhalt und Grundeinheit
+$inhalt = (float) $product->getData('inhalt');
+$grundeinheit = (float) $product->getData('grundeinheit');
+$verpackungseinheit = $product->getAttributeText('verpackungseinheit');
+$masseinheit = $product->getAttributeText('masseinheit');
+$preis = (float) $priceModel->getAmount()->getValue();
+
+if ($inhalt > 0 && $grundeinheit > 0) {
+    $preisProEinheit = round($preis / ($inhalt * $grundeinheit), 2);
+?>
+    <span class="price-per-unit">
+        <?= __('%1 € pro %2', number_format($preisProEinheit, 2, ',', '.'), $masseinheit) ?>
+    </span>
+<?php
+}
+
+// Attribut-Code anpassen!
+?>
+<?php if ($block->hasSpecialPrice()) : ?>
+
+    <!-- mawa: price per unit -->
+    <?php if ($inhalt > 0 && $grundeinheit > 0) {
+        $preisProEinheit = round($preis / ($inhalt * $grundeinheit), 2);
+    ?>
+        <span class="price-per-unit">
+            <?= __('%1 € pro %2', number_format($preisProEinheit, 2, ',', '.'), $masseinheit) ?>
+        </span>
+    <?php } ?>
+    <!-- ** -->
+
+    <span class="special-price">
+        <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
+            'display_label'     => __('Special Price'),
+            'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
+            'price_type'        => 'finalPrice',
+            'include_container' => true,
+            'schema' => $schema
+        ]); ?>
+
+        <!-- mawa: price per unit -->
+        <?php if ($verpackungseinheit): ?>
+            <span class="price-per-unit-hint">
+                <?= __('pro %1', $verpackungseinheit) ?>
+            </span>
+        <?php endif; ?>
+        <!-- ** -->
+
+    </span>
+    <span class="old-price">
+        <?= /* @noEscape */ $block->renderAmount($priceModel->getAmount(), [
+            'display_label'     => __('Regular Price'),
+            'price_id'          => $block->getPriceId('old-price-' . $idSuffix),
+            'price_type'        => 'oldPrice',
+            'include_container' => true,
+            'skip_adjustments'  => false
+        ]); ?>
+
+        <!-- mawa: price per unit -->
+        <?php if ($verpackungseinheit): ?>
+            <span class="price-per-unit-hint">
+                <?= __('pro %1', $verpackungseinheit) ?>
+            </span>
+        <?php endif; ?>
+        <!-- ** -->
+
+    </span>
+<?php else : ?>
+    <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
+        'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
+        'price_type'        => 'finalPrice',
+        'include_container' => true,
+        'schema' => $schema
+    ]); ?>
+
+    <!-- mawa: price per unit -->
+    <?php if ($verpackungseinheit): ?>
+        <span class="price-per-unit-hint">
+            <?= __('pro %1', $verpackungseinheit) ?>
+        </span>
+    <?php endif; ?>
+    <!-- ** -->
+
+<?php endif; ?>
+
+<!-- mawa: price per unit -->
+<div class="price-tax-hint">
+    <?= __('inkl. Mehrwertsteuer') ?>
+</div>
+<!-- ** -->
+
+
+<?php if ($block->showMinimalPrice()) : ?>
+    <?php if ($block->getUseLinkForAsLowAs()) : ?>
+        <a href="<?= $block->escapeUrl($block->getSaleableItem()->getProductUrl()) ?>" class="minimal-price-link">
+            <?= /* @noEscape */ $block->renderAmountMinimal() ?>
+        </a>
+    <?php else : ?>
+        <span class="minimal-price-link">
+            <?= /* @noEscape */ $block->renderAmountMinimal() ?>
+        </span>
+    <?php endif ?>
+<?php endif; ?>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Menu/etc/menu.xsd">
+    <menu>
+        <add id="Upgradeschmiede_Manufacturer::manufacturer"
+             title="Hersteller"
+             module="Upgradeschmiede_Manufacturer"
+             sortOrder="90"
+             parent="Magento_Catalog::catalog"
+             action="manufacturer/manufacturer/index"
+             resource="Upgradeschmiede_Manufacturer::manufacturer"/>
+    </menu>
+</config>

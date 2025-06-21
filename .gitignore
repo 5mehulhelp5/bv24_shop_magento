@@ -1,0 +1,13 @@
+/var/
+/pub/static/
+/pub/media/
+/vendor/
+/app/etc/env.php
+*.log
+*.cache
+/node_modules/
+/generated/
+/composer.lock
+.DS_Store
+.idea/
+/*.iml

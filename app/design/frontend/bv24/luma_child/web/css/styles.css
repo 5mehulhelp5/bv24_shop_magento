@@ -1,0 +1,269 @@
+/** color **/
+@primary__color: #990052;
+
+/*     .navigation {
+        background: #990052 !important;
+        font-weight: 700;
+        height: inherit;
+        left: auto;
+        overflow: inherit;
+        padding: 0;
+        position: relative;
+        top: 0;
+        width: 100%;
+        z-index: 3;
+    }
+ */
+
+body {
+    overflow-x: hidden;
+    font-size: 1.7rem;
+
+}
+
+.page-main a, .page-main .alink, .page-main a:visited {
+    color: #990052 !important;
+    text-decoration: none;
+}
+
+/* input , textarea{
+
+    border: 0.15rem solid #990052 !important;
+
+} */
+
+input:focus, textarea:focus {
+    box-shadow: 0 0 4px 1px #99005280 !important;
+    /* Beispiel: Magenta-Schatten, leicht transparent */
+    outline: none;
+}
+
+
+.action.primary,
+.action-primary {
+    background-image: none;
+    background: #990052 !important;
+    border: 1px solid #990052 !important;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    padding: 7px 15px;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+/*** navbar ***/
+
+.nav-sections,
+.navigation {
+    background: #ffff !important;
+}
+
+@media (min-width: 768px),
+print {
+
+    .navigation .level0.active>.level-top,
+    .navigation .level0.has-active>.level-top {
+        border-color: #990052 !important;
+        border-style: solid;
+        border-width: 0 0 3px;
+        color: #333;
+        text-decoration: none;
+        display: inline-block;
+    }
+}
+
+/* search */
+
+@media (min-width: 768px),
+print {
+    .block-search {
+        float: right;
+        padding-left: 15px;
+        position: relative;
+        width: 400px !important;
+        z-index: 4;
+    }
+}
+
+input#minisearch-input-top-search {
+    height: 4rem !important;
+    border: 0.2rem solid #990052;
+    /* Magenta Border */
+    padding: 8px 12px;
+    /* Adjust padding for better balance */
+    font-size: 1.3rem;
+    /* Use rem units for better scalability */
+    border-radius: 0px;
+    /* Add rounded corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Add a subtle box-shadow */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    /* Add smooth transitions */
+}
+
+
+
+
+.minicart-wrapper .action.showcart:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 3.5rem !important;
+    line-height: 4rem !important;
+    color: #990052 !important;
+    content: '\f11e' !important;
+    /* Unicode für ri-shopping-cart-line */
+    font-family: 'remixicon' !important;
+    /* Remix Icon Font verwenden */
+    margin: 0;
+    vertical-align: middle !important;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    text-align: center;
+}
+
+@media (min-width: 768px),
+print {
+    .block-search .action.search:before {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: none !important;
+        font-size: 1.9rem !important;
+        line-height: 4rem;
+        color: #990052 !important;
+        /*content: '\f0d1'!important;*/
+        content: '' !important;
+        font-family: 'remixicon' !important;
+        margin: 0;
+        vertical-align: middle !important;
+        display: inline-block;
+        font-weight: normal;
+        overflow: hidden;
+        speak: none;
+        text-align: center;
+        opacity: 1 !important;
+    }
+}
+
+
+.slider-text,
+.slide-content {
+    position: absolute;
+    bottom: 20px;
+    /* Push it down */
+    left: 20px;
+    /* Align it left */
+    top: auto;
+    /* Reset top if set */
+    transform: none !important;
+    /* Remove any centering transforms */
+    text-align: left;
+}
+
+.test-class .pagebuilder-slide-wrapper {
+    position: relative;
+    /* Add this */
+}
+
+.test-class .pagebuilder-overlay {
+    position: absolute;
+    /* Change from static */
+    bottom: 0;
+    /* Position from the bottom */
+    left: 0;
+    /* Position from the right */
+    margin: 0;
+    /* Remove the large right margin */
+    /* Keep width and height as needed, or adjust */
+}
+
+.pagebuilder-overlay h1 {
+    margin-bottom: 0;
+
+}
+
+
+/*** slider ***/
+
+.slick-dots {
+    margin-top: -50px;
+}
+
+
+/*** banner ***/
+
+.full-width-banner {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    max-width: 100vw;
+    transform: translateX(-50%);
+    padding: 2rem 0;
+    box-sizing: border-box;
+    background: #990052;
+    /* Beispiel-Hintergrund */
+    overflow-x: hidden;
+}
+
+.full-width-banner p {
+    margin-bottom: 0rem !important;
+}
+
+
+
+@media (min-width: 768px),
+print {
+    .page-header .panel.wrapper {
+        border-bottom: 1px solid #e8e8e8;
+        background-color: #990052 !important;
+    }
+}
+
+
+.header.panel>.header.links>li>a {
+    font-size: 1.5rem !important;
+}
+
+.header.panel>.header.links>li>a i {
+    font-size: 2rem !important;
+}
+
+
+@media (min-width: 768px),
+print {
+    .header.panel>.header.links>li {
+        display: inline-block;
+        vertical-align: middle !important;
+    }
+}
+
+
+/** product **/
+
+.product-info-main .product-info-price {
+    border-bottom: 0.2rem solid #990052 !important;
+
+}
+
+
+
+.page-main-details .product-section-title {
+    border-bottom: 0.2rem solid #990052 !important;
+}
+
+
+/* product box */
+
+.product-item{
+        border: 0.2rem solid #990052 !important;
+
+}
+
+.fotorama__thumb-border{
+    border-color: #990052 !important;
+}
