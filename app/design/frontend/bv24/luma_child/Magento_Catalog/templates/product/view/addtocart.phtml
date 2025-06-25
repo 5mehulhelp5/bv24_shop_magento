@@ -1,0 +1,217 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php
+$masseinheit = $_product->getAttributeText('masseinheit');
+$inhalt = (float) $_product->getData('inhalt');
+$verpackungseinheit = $_product->getAttributeText('verpackungseinheit');
+
+?>
+
+
+
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) : ?>
+    <div class="box-tocart">
+        <?php if ($block->shouldRenderQuantity()) : ?>
+            <div class="field-set">
+                <div class="field qty">
+                    <label class="label" for="qty"><span><?= $verpackungseinheit ?></span></label>
+                    <div class="control qty-control" style="display: flex; align-items: center;">
+                        <button type="button" class="qty-btn" id="qty-minus" aria-label="Minus">−</button>
+                        <input type="number"
+                            name="qty"
+                            id="qty"
+                            min="<?= $block->getProductDefaultQty() * 1 ?>"
+                            value="<?= $block->getProductDefaultQty() * 1 ?>"
+                            title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                            class="input-text qty"
+                            style="width: 60px; text-align: center; margin: 0 5px;" />
+                        <button type="button" class="qty-btn" id="qty-plus" aria-label="Plus">+</button>
+                    </div>
+                </div>
+                <div class="field qty-unit">
+                    <label class="label" for="qty_unit">
+                        <span><?= $block->escapeHtml(__('Menge in %1', $masseinheit)) ?></span>
+                    </label>
+                    <div class="control qty-control" style="display: flex; align-items: center;">
+                        <button type="button" class="qty-unit-btn" id="qty-unit-minus" aria-label="Minus">−</button>
+                        <input type="number"
+                            name="qty_unit"
+                            id="qty_unit"
+                            min="0"
+                            value=""
+                            title="<?= $block->escapeHtmlAttr(__('Menge in %1', $masseinheit)) ?>"
+                            class="input-text qty"
+                            style="width: 80px; text-align: center; margin: 0 5px;" />
+                        <button type="button" class="qty-unit-btn" id="qty-unit-plus" aria-label="Plus">+</button>
+                    </div>
+                </div>
+                <div id="cart-total-amount" style="margin-top:10px; font-weight:bold;"></div>
+                <!-- mawa: tax notice -->
+                <div class="price-tax-hint">
+                    <?= __('Preise inkl. 19% MwSt zzgl. Versand') ?>
+                </div>
+                <!-- ** -->
+
+
+            </div>
+
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                class="action primary tocart"
+                id="product-addtocart-button" disabled>
+                <span><?= $block->escapeHtml($buttonTitle) ?></span>
+            </button>
+            <?= $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+    </div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+
+
+
+<script>
+    var packungsgroesse = <?= json_encode($inhalt) ?>;
+    var productPrice = <?= json_encode($_product->getFinalPrice()) ?>;
+
+    // Hilfsfunktion: Rundet auf das nächste exakte Vielfache
+    function roundToStep(val, step) {
+        return Math.round(val / step) * step;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var qtyInput = document.getElementById('qty');
+        var qtyUnitInput = document.getElementById('qty_unit');
+        var btnQtyMinus = document.getElementById('qty-minus');
+        var btnQtyPlus = document.getElementById('qty-plus');
+        var btnQtyUnitMinus = document.getElementById('qty-unit-minus');
+        var btnQtyUnitPlus = document.getElementById('qty-unit-plus');
+
+        if (!qtyInput || !qtyUnitInput) return;
+
+        // Synchronisiere qty -> qty_unit
+        function syncQtyUnit() {
+            var minQty = parseInt(qtyInput.min, 10) || 1;
+            var qty = parseInt(qtyInput.value, 10) || minQty;
+            if (qty < minQty) qty = minQty;
+            qtyInput.value = qty;
+            qtyUnitInput.value = roundToStep(qty * packungsgroesse, packungsgroesse).toFixed(2);
+        }
+
+        // Synchronisiere qty_unit -> qty (immer aufrunden)
+        function syncQtyFromUnit() {
+            var minQty = parseInt(qtyInput.min, 10) || 1;
+            var qtyUnit = parseFloat(qtyUnitInput.value.replace(',', '.')) || 0;
+            var steps = Math.ceil(qtyUnit / packungsgroesse);
+            if (steps < minQty) steps = minQty;
+            var validQtyUnit = roundToStep(steps * packungsgroesse, packungsgroesse);
+            qtyInput.value = steps;
+            qtyUnitInput.value = validQtyUnit.toFixed(2);
+            updateCartTotal();
+
+        }
+
+        // Initial sync
+        syncQtyUnit();
+        updateCartTotal();
+
+        // qty minus button
+        btnQtyMinus.onclick = function() {
+            var minQty = parseInt(qtyInput.min, 10) || 1;
+            var qty = parseInt(qtyInput.value, 10) || minQty;
+            if (qty > minQty) {
+                qtyInput.value = qty - 1;
+                syncQtyUnit();
+                updateCartTotal();
+
+            }
+        };
+
+        // qty plus button
+        btnQtyPlus.onclick = function() {
+            var qty = parseInt(qtyInput.value, 10) || 1;
+            qtyInput.value = qty + 1;
+            syncQtyUnit();
+            updateCartTotal();
+
+        };
+
+        // qty_unit minus button
+        btnQtyUnitMinus.onclick = function() {
+            var minQty = parseInt(qtyInput.min, 10) || 1;
+            var minQtyUnit = minQty * packungsgroesse;
+            var qtyUnit = parseFloat(qtyUnitInput.value.replace(',', '.')) || minQtyUnit;
+
+            // Aktuelle Schritte berechnen (immer runden, nicht floor!)
+            var steps = Math.round(qtyUnit / packungsgroesse);
+
+            // Wenn wir schon am Minimum sind, NICHTS tun!
+            if (steps <= minQty) {
+                qtyInput.value = minQty;
+                qtyUnitInput.value = minQtyUnit.toFixed(2);
+                return;
+            }
+
+            // Einen Schritt runter
+            steps = steps - 1;
+            var validQtyUnit = steps * packungsgroesse;
+
+            qtyInput.value = steps;
+            qtyUnitInput.value = validQtyUnit.toFixed(2);
+            updateCartTotal();
+
+        };
+
+        // qty_unit plus button
+        btnQtyUnitPlus.onclick = function() {
+            var minQty = parseInt(qtyInput.min, 10) || 1;
+            var qtyUnit = parseFloat(qtyUnitInput.value.replace(',', '.')) || (minQty * packungsgroesse);
+            var steps = Math.round(qtyUnit / packungsgroesse) + 1;
+            if (steps < minQty) steps = minQty;
+            var validQtyUnit = roundToStep(steps * packungsgroesse, packungsgroesse);
+            qtyInput.value = steps;
+            qtyUnitInput.value = validQtyUnit.toFixed(2);
+            updateCartTotal();
+
+        };
+
+        // Manuelle Eingabe: nur bei Enter oder Verlassen runden/synchronisieren
+        qtyUnitInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                syncQtyFromUnit();
+                qtyUnitInput.blur();
+            }
+        });
+        qtyUnitInput.addEventListener('blur', syncQtyFromUnit);
+
+        // qty input: sync on change
+        qtyInput.addEventListener('input', syncQtyUnit);
+
+        function updateCartTotal() {
+            var qty = parseInt(qtyInput.value, 10) || 1;
+            var total = qty * productPrice;
+            document.getElementById('cart-total-amount').textContent =
+                'Gesamtsumme: ' + total.toLocaleString('de-DE', {
+                    style: 'currency',
+                    currency: 'EUR'
+                });
+        }
+    });
+</script>

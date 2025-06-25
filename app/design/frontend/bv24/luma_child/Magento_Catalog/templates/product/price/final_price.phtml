@@ -56,7 +56,7 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
                 <div class="pseudo-price-unit">
                     <div class="pseudo-price-unit-text">
                         <span class="sale-badge">
-                        <?= __('Sale -%1', number_format($rabatt, 0, ',', '.')) ?>
+                            <?= __('Sale -%1', number_format($rabatt, 0, ',', '.')) ?>
                             %
                         </span>
                     </div>
@@ -70,23 +70,25 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
                 <?= __('%1 €', number_format($preisProEinheit, 2, ',', '.')) ?>
             </span>
             <span class="price-unit">
-                <?= __(' pro %1', $masseinheit) ?>
+                <?= __('pro %1', $masseinheit) ?>
             </span>
-            <span style="display: block; padding: 5px 5px;">entspricht</span>
-            <div class="price-unit-after">
-                <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
-                    'display_label'     => __('Special Price'),
-                    'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
-                    'price_type'        => 'finalPrice',
-                    'include_container' => true,
-                    'schema' => $schema
-                ]); ?>
-                <?php if ($verpackungseinheit_singuar): ?>
+            <div class="price-per-sale-unit">
+                <span style="padding: 5px 0px;">entspricht </span>
+                <div class="price-unit-after">
+                    <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
+                        'display_label'     => __('Special Price'),
+                        'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
+                        'price_type'        => 'finalPrice',
+                        'include_container' => true,
+                        'schema' => $schema
+                    ]); ?>
+                    <?php if ($verpackungseinheit_singuar): ?>
 
-                <?php endif; ?>
-                <span class="price-per-unit-hint">
-                    <?= __('pro %1 (%2 %3)', $verpackungseinheit_singuar, $inhalt, $masseinheit) ?>
-                </span>
+                    <?php endif; ?>
+                    <span class="price-per-unit-hint">
+                        <?= __('pro %1 (%2 %3)', $verpackungseinheit_singuar, $inhalt, $masseinheit) ?>
+                    </span>
+                </div>
             </div>
 
         <?php } else { ?>
@@ -98,19 +100,16 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
                 'include_container' => true,
                 'schema' => $schema
             ]); ?>
-            <!-- mawa: price per unit -->
-            <?php if ($verpackungseinheit): ?>
-                <span class="price-per-unit-hint">
-                    <?= __('pro %1', $verpackungseinheit_singuar) ?>
-                </span>
-            <?php endif; ?>
-            <!-- ** -->
+            
+            <span class="price-per-unit-hint">
+                <?= __('pro %1 (%2 %3)', $verpackungseinheit_singuar, $inhalt, $masseinheit) ?>
+            </span>
 
         <?php } ?>
 
     </span>
     <?php
-/*
+    /*
     <span class="old-price">
         <?= $block->renderAmount($priceModel->getAmount(), [
             'display_label'     => __('Regular Price'),
@@ -160,11 +159,6 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
 
 <?php endif; ?>
 
-<!-- mawa: tax notice -->
-<div class="price-tax-hint">
-    <?= __('inkl. Mehrwertsteuer') ?>
-</div>
-<!-- ** -->
 
 
 <?php if ($block->showMinimalPrice()) : ?>

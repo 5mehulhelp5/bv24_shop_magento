@@ -23,8 +23,6 @@
         "magento/product-community-edition": "2.4.8-p1",
         "magepal/magento2-gmailsmtpapp": "^3.0",
         "smile/elasticsuite": "^2.11",
-        "snowdog/frontools": "^1.12",
-        "snowdog/theme-blank-sass": "^1.5",
         "yireo/magento2-webp2": "^0.14.3"
     },
     "autoload": {
