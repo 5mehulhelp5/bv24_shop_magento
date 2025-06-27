@@ -45,3 +45,36 @@
 //  ---------------------------------------------
 
 @block-items__counter__color: @color-gray43;
+
+
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .page-products {
+        .products-grid {
+            .product-item {
+                margin-left: 2%;
+                width: calc(~'(100% - 4%) / 2');
+
+                &:nth-child(3n + 1) {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    .page-products.page-layout-1column {
+        .products-grid {
+            .product-item {
+                width: (100%/4);
+            }
+        }
+    }
+
+    .page-products.page-layout-3columns {
+        .products-grid {
+            .product-item {
+                width: (100%/2);
+            }
+        }
+    }
+}

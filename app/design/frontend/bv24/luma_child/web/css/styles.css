@@ -22,8 +22,10 @@ body {
 /* Input-Felder */
 input:focus,
 textarea:focus {
-    box-shadow: 0 0 4px 1px #99005280 !important;
+    box-shadow: 0 2px 0 0 #990052, 0 3px 12px -6px #99005280 !important;
+    border-bottom: 2px solid #990052 !important;
     outline: none;
+    transition: border-bottom 0.2s, box-shadow 0.2s;
 }
 
 input#minisearch-input-top-search {
@@ -263,6 +265,11 @@ print {
     color: #990052 !important;
 }
 
+.product-item .price-per-unit-old{
+    color: #333;
+}
+
+
 @media (min-width: 768px),
 print {
     .price-per-unit {
@@ -378,24 +385,49 @@ print {
     z-index: 2;
 }
 
+
+
+@media (min-width: 768px){
 .page-products .products-grid .product-item {
     display: inline-block;
     margin-left: 2%;
     width: 98%;
 }
+}
 
-@media (min-width: 768px),
+.page-products .products-grid .product-item {
+        margin-left: 2%!important;
+        width: 96% !important;
+    }
+
+
+@media (min-width: 640px),
 print {
     .page-products .products-grid .product-item {
-        margin-left: 2%;
-        width: calc(100%/3-(1.5rem));
+        margin-left: 2%!important;
+        width: calc((100% - 5%) / 2) !important;
     }
 }
+
+@media (min-width: 998px),
+print {
+    .page-products .products-grid .product-item {
+        margin-left: 2%!important;
+        width: calc((100% - 6%) / 3) !important;
+    }
+}
+
+
+
+
+
 
 /* Produktbox & Details */
 .product-item-name,
 .product.name a {
+    font-size: 1.5rem;
     font-weight: bold;
+    color: #333;
 }
 
 .product-item-inner {
@@ -445,7 +477,7 @@ print {
     z-index: 10;
     display: flex;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 4px;
     padding: 2px 2px;
     opacity: 0;
@@ -494,7 +526,7 @@ print {
     font-size: 2rem !important;
 }
 
-.price-per-sale-unit {
+.product-item .price-per-sale-unit {
     display: none;
 }
 
