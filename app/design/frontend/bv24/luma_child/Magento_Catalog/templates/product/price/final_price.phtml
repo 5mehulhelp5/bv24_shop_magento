@@ -60,8 +60,11 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
                             %
                         </span>
                     </div>
-                    <span class="price-per-unit-old" style="text-decoration: line-through;">
-                        <?= __('%1 €', number_format($pseudo_price_unit, 2, ',', '.')) ?>
+                    <span class="price-per-unit-old" >
+                        statt
+                        <div class="pseudo-price-unit-value" style="text-decoration: line-through; display: inline;">
+                            <?= __('%1 €', number_format($pseudo_price_unit, 2, ',', '.')) ?>
+                        </div>
                     </span>
                 </div>
             <?php endif; ?>
@@ -100,7 +103,7 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
                 'include_container' => true,
                 'schema' => $schema
             ]); ?>
-            
+
             <span class="price-per-unit-hint">
                 <?= __('pro %1 (%2 %3)', $verpackungseinheit_singuar, $inhalt, $masseinheit) ?>
             </span>
