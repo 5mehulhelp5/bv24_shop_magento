@@ -1,0 +1,29 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+$product = $block->getProduct() ?: \Magento\Framework\App\ObjectManager::getInstance()
+    ->get(\Magento\Framework\Registry::class)
+    ->registry('current_product');
+if (!$product) {
+    return;
+}
+$collectionFactory = \Magento\Framework\App\ObjectManager::getInstance()
+    ->get(\Opengento\Document\Model\ResourceModel\Document\CollectionFactory::class);
+
+$documentCollection = $collectionFactory->create();
+$documentCollection->addFieldToFilter('product_id', $product->getId());
+
+if ($documentCollection->getSize()):
+?>
+<div class="product-documents">
+    <h3>Downloads</h3>
+    <ul>
+        <?php foreach ($documentCollection as $document): ?>
+            <li>
+                <a href="<?= $document->getUrl() ?>" target="_blank" rel="noopener">
+                    <?= $block->escapeHtml($document->getTitle()) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>

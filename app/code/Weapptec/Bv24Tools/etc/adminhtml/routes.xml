@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="bv24tools" frontName="bv24tools">
+            <module name="Weapptec_Bv24Tools"/>
+        </route>
+    </router>
+</config>

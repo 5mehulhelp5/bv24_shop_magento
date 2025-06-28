@@ -1,0 +1,24 @@
+{
+  "name": "magepsycho/magento2-product-pdf-file-attachment",
+  "description": "Product PDF Attachment",
+  "type": "magento2-module",
+  "version": "1.0.1",
+  "authors": [
+    {
+      "name": "Raj KB",
+      "email": "rajkb@magepsycho.com",
+      "homepage": "https://www.magepsycho.com/magento2-product-pdf-file-attachment.html"
+    }
+  ],
+  "license": [
+    "OSL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "MagePsycho\\ProductAttachment\\": "src"
+    }
+  }
+}
