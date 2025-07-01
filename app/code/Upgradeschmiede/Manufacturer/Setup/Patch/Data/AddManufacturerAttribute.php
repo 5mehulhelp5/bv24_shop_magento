@@ -33,7 +33,7 @@ class AddManufacturerAttribute implements DataPatchInterface
                 'required' => false,
                 'sort_order' => 210,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
-                'visible' => true,
+                'visible' => false,
                 'user_defined' => true,
                 'searchable' => true,
                 'filterable' => true,

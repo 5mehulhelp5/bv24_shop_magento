@@ -1,17 +1,15 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-       <head>
-        <css src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"/>
-        <script src="Weapptec_Bv24Tools::js/product-file-select2.js"/>
-        <!-- <script src="Weapptec_Bv24Tools::js/product-file-autocomplete.js"/> -->
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- <css src="Weapptec_Bv24Tools::css/select2.min.css" />
+        <script src="Weapptec_Bv24Tools::js/product-file-select2.js" /> -->
     </head>
     <body>
         <referenceContainer name="content">
             <block class="Weapptec\Bv24Tools\Block\Adminhtml\ListBlock"
-                   name="bv24tools.list"
-                   template="Weapptec_Bv24Tools::list.phtml"/>
+                name="bv24tools.list"
+                template="Weapptec_Bv24Tools::list.phtml" />
         </referenceContainer>
     </body>
 </page>

@@ -21,24 +21,31 @@ class UpgradeData implements UpgradeDataInterface
         $setup->startSetup();
 
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
-        if (version_compare($context->getVersion(), '1.0.1', '<')) {
-            $eavSetup->addAttribute(
+
+        $eavSetup->removeAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'bv24_file'
+        );
+
+
+       $eavSetup->addAttribute(
                 \Magento\Catalog\Model\Product::ENTITY,
-                'bv24_file_id',
+                'bv24_file',
                 [
-                    'type' => 'int',
+                    'type' => 'varchar',
                     'label' => 'BV24 Datei',
-                    'input' => 'text', // wichtig: kein select!
+                    'input' => 'multiselect',
+                    'backend' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
+                    'source' => \Weapptec\Bv24Tools\Model\Config\Source\Bv24ToolsFile::class,
                     'required' => false,
                     'sort_order' => 100,
                     'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
                     'visible' => true,
                     'user_defined' => true,
-                    'group' => 'General',
+                    'group' => 'Downloads',
                     'visible_on_front' => false,
                 ]
             );
-        }
 
         $setup->endSetup();
     }

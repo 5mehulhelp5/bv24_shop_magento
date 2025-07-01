@@ -1,17 +1,33 @@
 <?xml version="1.0"?>
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
-    <fieldset name="product-details">
-        <field name="bv24_file_id">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <fieldset name="downloads" sortOrder="100">
+        <field name="bv24_file" sortOrder="50" formElement="select">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">
+                    Weapptec\Bv24Tools\Model\Config\Source\Bv24ToolsFile
+                </item>
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="componentType" xsi:type="string">field</item>
-                    <item name="label" xsi:type="string" translate="true">BV24 Datei</item>
-                    <item name="elementTmpl" xsi:type="string">ui/form/element/input</item>
-                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+                    <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="chipsEnabled" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
                 </item>
             </argument>
+            <settings>
+                <label translate="true">Downloads</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <dataScope>bv24_file</dataScope> <!-- 🔧 muss exakt so heißen wie das Attribut -->
+                <visible>true</visible>
+            </settings>
         </field>
     </fieldset>
+
 </form>
