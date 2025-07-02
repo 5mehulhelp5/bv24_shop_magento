@@ -360,7 +360,6 @@ return [
         'Magento_WishlistGraphQl' => 1,
         'MagePal_Core' => 0,
         'MagePal_GmailSmtpApp' => 0,
-        'MagePsycho_ProductAttachment' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeCustomerBalance' => 1,
         'PayPal_BraintreeGiftCard' => 1,
