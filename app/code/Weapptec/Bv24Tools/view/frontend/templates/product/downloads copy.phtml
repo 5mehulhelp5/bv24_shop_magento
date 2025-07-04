@@ -1,0 +1,41 @@
+<?php
+
+/** @var \Magento\Catalog\Block\Product\View $block */
+$_product = $block->getProduct();
+$downloads = explode(',', (string) $_product->getData('bv24_file'));
+
+/** @var \Weapptec\Bv24Tools\Model\Config\Source\Bv24ToolsFile $fileSource */
+$fileSource = \Magento\Framework\App\ObjectManager::getInstance()
+    ->get(\Weapptec\Bv24Tools\Model\Config\Source\Bv24ToolsFile::class);
+
+$allFiles = $fileSource->getData(); // array of all files with all columns
+?>
+<div class="product-full-width-section">
+    <h2 class="product-section-title">
+        Downloads
+    </h2>
+    <div class="data item content" data-role="content">
+        <ul>
+        <?php
+        // Index all files by id for fast lookup
+        $filesById = [];
+        foreach ($allFiles as $file) {
+            $filesById[$file['id']] = $file;
+        }
+        foreach ($downloads as $id):
+            $id = trim($id);
+            if (!isset($filesById[$id])) continue;
+            $file = $filesById[$id];
+            // Build the media URL (adjust path if needed)
+            $mediaUrl = $block->getBaseUrl() . 'media/bv24tools/' . ltrim($file['file_name'], '/');
+        ?>
+            <li>
+                <a href="<?= htmlspecialchars($mediaUrl) ?>" target="_blank" rel="noopener">
+                    <?= htmlspecialchars($file['description'] ?: $file['file_name']) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    </div>
+    
+</div>

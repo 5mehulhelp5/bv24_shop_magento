@@ -28,4 +28,20 @@ class Bv24ToolsFile extends AbstractSource
 
         return $this->_options;
     }
+
+     public function getData()
+    {
+        if ($this->_options === null) {
+            $connection = $this->resource->getConnection();
+            $tableName = $this->resource->getTableName('weapptec_bv24tools_file');
+
+            $select = $connection->select()
+                ->from($tableName, ['id', 'title', 'description', 'file_name', 'created_at']);
+
+            $this->_options = $connection->fetchAll($select);
+        }
+
+        return $this->_options;
+    }
 }
+

@@ -22,7 +22,6 @@
         "magento/composer-root-update-plugin": "^2.0.4",
         "magento/product-community-edition": "2.4.8-p1",
         "magepal/magento2-gmailsmtpapp": "^3.0",
-        "sebwite/magento2-product-downloads": "^1.1",
         "smile/elasticsuite": "^2.11",
         "yireo/magento2-webp2": "^0.14.3"
     },
