@@ -3,10 +3,17 @@
   xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
   <body>
     <referenceContainer name="product.info.details.after.wrapper.main">
+      <!-- downloads -->
       <block class="Magento\Catalog\Block\Product\View"
         name="product.info.downloads"
         template="Weapptec_Bv24Tools::product/downloads.phtml"
         after="product.attributes.wrapper" />
+          <!-- videos -->
+
+        <block class="Magento\Catalog\Block\Product\View"
+        name="product.info.videos"
+        template="Weapptec_Bv24Tools::product/videos.phtml"
+        after="product.info.downloads" />
     </referenceContainer>
   </body>
 </page>
