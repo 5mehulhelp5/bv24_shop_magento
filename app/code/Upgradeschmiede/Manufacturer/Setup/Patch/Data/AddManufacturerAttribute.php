@@ -29,7 +29,7 @@ class AddManufacturerAttribute implements DataPatchInterface
             [
                 'type' => 'int',
                 'label' => 'Hersteller',
-                'input' => 'select',
+                'input' => 'multiselect',
                 'required' => false,
                 'sort_order' => 210,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,

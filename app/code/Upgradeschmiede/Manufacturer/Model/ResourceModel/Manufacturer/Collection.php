@@ -19,6 +19,27 @@ class Collection extends AbstractCollection implements SearchResultInterface
         );
     }
 
+    public function getItems()
+    {
+        $logger = \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Psr\Log\LoggerInterface::class);
+        $logger->debug('Hersteller Collection: getItems() ausgeführt');
+
+        if (!$this->isLoaded()) {
+            $this->load();
+        }
+
+        $items = parent::getItems();
+
+        if (!is_array($items)) {
+            $logger->debug('Hersteller Collection: getItems() liefert keinen Array!');
+        } else {
+            $logger->debug('Hersteller Collection: ' . count($items) . ' Einträge gefunden');
+        }
+
+        return $items;
+    }
+
     public function getAggregations() { return $this->aggregations; }
     public function setAggregations($aggregations) { $this->aggregations = $aggregations; }
     public function getSearchCriteria() { return null; }
@@ -26,12 +47,4 @@ class Collection extends AbstractCollection implements SearchResultInterface
     public function getTotalCount() { return $this->getSize(); }
     public function setTotalCount($totalCount) { return $this; }
     public function setItems(array $items = null) { return $this; }
-
-    public function getItems()
-    {
-        if (!$this->isLoaded()) {
-            $this->load();
-        }
-        return parent::getItems();
-    }
 }

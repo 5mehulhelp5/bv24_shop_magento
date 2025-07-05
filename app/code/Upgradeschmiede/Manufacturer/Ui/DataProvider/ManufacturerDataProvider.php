@@ -14,7 +14,13 @@ class ManufacturerDataProvider extends AbstractDataProvider
         array $meta = [],
         array $data = []
     ) {
+        $logger = \Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Psr\Log\LoggerInterface::class);
+        $logger->debug('ManufacturerDataProvider: Konstruktor ausgeführt');
+
         $this->collection = $collectionFactory->create();
+        $logger->debug('ManufacturerDataProvider: Collection gesetzt');
+
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 }
