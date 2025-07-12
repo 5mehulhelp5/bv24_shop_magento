@@ -36,6 +36,7 @@ class UpgradeData implements UpgradeDataInterface
                     'label' => 'BV24 Datei',
                     'input' => 'multiselect',
                     'backend' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
+                    'backend_model' => \Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend::class,
                     'source' => \Weapptec\Bv24Tools\Model\Config\Source\Bv24ToolsFile::class,
                     'required' => false,
                     'sort_order' => 100,

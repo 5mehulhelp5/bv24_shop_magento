@@ -21,7 +21,7 @@ class Bv24ToolsFile extends AbstractSource
             $tableName = $this->resource->getTableName('weapptec_bv24tools_file');
 
             $select = $connection->select()
-                ->from($tableName, ['value' => 'id', 'label' => 'title']);
+                ->from($tableName, ['value' => 'id', 'label' => 'file_name']);
 
             $this->_options = $connection->fetchAll($select);
         }

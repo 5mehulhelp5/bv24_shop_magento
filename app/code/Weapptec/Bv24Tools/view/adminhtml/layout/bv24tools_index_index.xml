@@ -2,6 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
+        <title>Dokumente</title>
         <!-- <css src="Weapptec_Bv24Tools::css/select2.min.css" />
         <script src="Weapptec_Bv24Tools::js/product-file-select2.js" /> -->
     </head>
@@ -11,5 +12,6 @@
                 name="bv24tools.list"
                 template="Weapptec_Bv24Tools::list.phtml" />
         </referenceContainer>
+      
     </body>
 </page>
