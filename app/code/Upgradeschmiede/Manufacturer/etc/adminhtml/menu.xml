@@ -1,13 +1,7 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:Menu/etc/menu.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Upgradeschmiede_Manufacturer::manufacturer"
-             title="Hersteller"
-             module="Upgradeschmiede_Manufacturer"
-             sortOrder="90"
-             parent="Magento_Catalog::catalog"
-             action="manufacturer/manufacturer/index"
-             resource="Upgradeschmiede_Manufacturer::manufacturer"/>
+        <add id="Upgradeschmiede_Manufacturer::manufacturer" title="Hersteller" module="Upgradeschmiede_Manufacturer" sortOrder="100" resource="Upgradeschmiede_Manufacturer::manufacturer"/>
+        <add id="Upgradeschmiede_Manufacturer::manufacturer_manage" title="Hersteller verwalten" module="Upgradeschmiede_Manufacturer" sortOrder="10" action="manufacturer/manufacturer" resource="Upgradeschmiede_Manufacturer::manufacturer" parent="Upgradeschmiede_Manufacturer::manufacturer"/>
     </menu>
 </config>

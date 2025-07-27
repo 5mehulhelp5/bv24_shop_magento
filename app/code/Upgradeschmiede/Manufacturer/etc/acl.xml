@@ -3,8 +3,8 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Magento_Catalog::catalog">
-                    <resource id="Upgradeschmiede_Manufacturer::manufacturer" title="Hersteller verwalten" sortOrder="90"/>
+                <resource id="Upgradeschmiede_Manufacturer::manufacturer" title="Hersteller" sortOrder="100">
+                    <resource id="Upgradeschmiede_Manufacturer::manufacturer_manage" title="Hersteller verwalten" sortOrder="10"/>
                 </resource>
             </resource>
         </resources>

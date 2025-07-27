@@ -1,5 +1,5 @@
 <?php
-namespace Upgradeschmiede\Manufacturer\Model\Attribute\Source;
+namespace Upgradeschmiede\Manufacturer\Model\Config\Source;
 
 use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 use Upgradeschmiede\Manufacturer\Model\ResourceModel\Manufacturer\CollectionFactory;

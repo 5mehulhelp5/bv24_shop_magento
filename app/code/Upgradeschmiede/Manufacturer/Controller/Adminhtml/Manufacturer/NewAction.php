@@ -2,22 +2,31 @@
 namespace Upgradeschmiede\Manufacturer\Controller\Adminhtml\Manufacturer;
 
 use Magento\Backend\App\Action;
-use Magento\Framework\Controller\Result\RedirectFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
 
 class NewAction extends Action
 {
-    protected $resultRedirectFactory;
+    protected $resultPageFactory;
 
-    public function __construct(Action\Context $context, RedirectFactory $resultRedirectFactory)
-    {
+    public function __construct(
+        Context $context,
+        PageFactory $resultPageFactory
+    ) {
         parent::__construct($context);
-        $this->resultRedirectFactory = $resultRedirectFactory;
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     public function execute()
     {
-        $resultRedirect = $this->resultRedirectFactory->create();
-        $resultRedirect->setPath('*/*/edit');
-        return $resultRedirect;
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Upgradeschmiede_Manufacturer::manufacturer');
+        $resultPage->getConfig()->getTitle()->prepend(__('Neuer Hersteller'));
+        return $resultPage;
+    }
+
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Upgradeschmiede_Manufacturer::manufacturer');
     }
 }

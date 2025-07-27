@@ -1,7 +1,9 @@
 <?php
-use Magento\Framework\Component\ComponentRegistrar;
-ComponentRegistrar::register(
-    ComponentRegistrar::MODULE,
+/**
+ * Upgradeschmiede Manufacturer Module Registration
+ */
+\Magento\Framework\Component\ComponentRegistrar::register(
+    \Magento\Framework\Component\ComponentRegistrar::MODULE,
     'Upgradeschmiede_Manufacturer',
     __DIR__
 );
