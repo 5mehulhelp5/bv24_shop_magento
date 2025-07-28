@@ -3,8 +3,9 @@ namespace Upgradeschmiede\Manufacturer\Model\Manufacturer;
 
 use Upgradeschmiede\Manufacturer\Model\ResourceModel\Manufacturer\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Ui\DataProvider\AbstractDataProvider;
 
-class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
+class DataProvider extends AbstractDataProvider
 {
     protected $collection;
     protected $dataPersistor;
@@ -29,17 +30,18 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
+        
         $items = $this->collection->getItems();
         foreach ($items as $manufacturer) {
             $this->loadedData[$manufacturer->getId()] = $manufacturer->getData();
         }
 
-        $data = $this->dataPersistor->get('manufacturer');
+        $data = $this->dataPersistor->get('manufacturer_manufacturer');
         if (!empty($data)) {
             $manufacturer = $this->collection->getNewEmptyItem();
             $manufacturer->setData($data);
             $this->loadedData[$manufacturer->getId()] = $manufacturer->getData();
-            $this->dataPersistor->clear('manufacturer');
+            $this->dataPersistor->clear('manufacturer_manufacturer');
         }
 
         return $this->loadedData;

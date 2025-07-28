@@ -40,6 +40,6 @@ class Delete extends Action
 
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('Upgradeschmiede_Manufacturer::manufacturer');
+        return $this->_authorization->isAllowed('Upgradeschmiede_Manufacturer::manufacturer_manage');
     }
 }
