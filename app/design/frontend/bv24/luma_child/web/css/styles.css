@@ -539,7 +539,17 @@ print {
     background: #990052;
 }
 
+.filter-options-title:after{
+    top:0px !important;
+    font-size: 30px !important;
+
+}
+
+
 /* Sonstiges */
 .product-item-info {
     height: 100%;
 }
+
+
+

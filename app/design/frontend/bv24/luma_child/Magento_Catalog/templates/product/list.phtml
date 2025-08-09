@@ -69,10 +69,10 @@ $_helper = $block->getData('outputHelper');
                             ->keepFrame(false)
                             ->resize(800, 800) // oder gewünschte Größe
                             ->getUrl();
-                        if ($pos != null) {
-                            $position = 'left:' . $productImage->getWidth() . 'px;'
-                                . 'top:' . $productImage->getHeight() . 'px;';
-                        }
+                        // if ($pos != null) {
+                        //     $position = 'left:' . $productImage->getWidth() . 'px;'
+                        //         . 'top:' . $productImage->getHeight() . 'px;';
+                        // }
 
                         $galleryImages = $_product->getMediaGalleryImages();
                         $hoverImageUrl = null;

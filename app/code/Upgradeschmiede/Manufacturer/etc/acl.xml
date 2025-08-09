@@ -5,6 +5,8 @@
             <resource id="Magento_Backend::admin">
                 <resource id="Upgradeschmiede_Manufacturer::manufacturer" title="Hersteller" sortOrder="100">
                     <resource id="Upgradeschmiede_Manufacturer::manufacturer_manage" title="Hersteller verwalten" sortOrder="10"/>
+                    <resource id="Upgradeschmiede_Manufacturer::manufacturer_mailmanage" title="E-Mails verwalten" sortOrder="20"/>
+                    <resource id="Upgradeschmiede_Manufacturer::manufacturer_maillog" title="E-Mail-Log" sortOrder="30"/>
                 </resource>
             </resource>
         </resources>

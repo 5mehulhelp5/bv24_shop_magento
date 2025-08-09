@@ -11,11 +11,11 @@ class Save extends Action
 {
     protected $manufacturerFactory;
     protected $dataPersistor;
-	
+
     public function __construct(
         Context $context,
         ManufacturerFactory $manufacturerFactory,
-        DataPersistorInterface $dataPersistor,
+        DataPersistorInterface $dataPersistor
     ) {
         parent::__construct($context);
         $this->manufacturerFactory = $manufacturerFactory;
@@ -29,20 +29,37 @@ class Save extends Action
 
         if ($data) {
             $id = $this->getRequest()->getParam('manufacturer_id');
-            $model = $this->manufacturerFactory->create()->load($id);
+            
+            if ($id) {
+                // Bearbeitung eines bestehenden Herstellers
+                $model = $this->manufacturerFactory->create()->load($id);
+                if (!$model->getId()) {
+                    $this->messageManager->addErrorMessage(__('Dieser Hersteller existiert nicht mehr.'));
+                    return $resultRedirect->setPath('*/*/');
+                }
+            } else {
+                // Neuer Hersteller
+                $model = $this->manufacturerFactory->create();
+            }
 
-            if (!$model->getId() && $id) {
-                $this->messageManager->addErrorMessage(__('Dieser Hersteller existiert nicht mehr.'));
-                return $resultRedirect->setPath('*/*/');
+            // Entferne form_key aus den Daten
+            if (isset($data['form_key'])) {
+                unset($data['form_key']);
             }
 
             $model->setData($data);
 
             try {
-			    $model->save();
-               	$this->messageManager->addSuccessMessage(__('Hersteller wurde erfolgreich gespeichert.'));
-                $this->dataPersistor->clear('manufacturer_manufacturer');				
-				
+                $model->save();
+                
+                if ($id) {
+                    $this->messageManager->addSuccessMessage(__('Hersteller wurde erfolgreich aktualisiert.'));
+                } else {
+                    $this->messageManager->addSuccessMessage(__('Neuer Hersteller wurde erfolgreich erstellt.'));
+                }
+                
+                $this->dataPersistor->clear('manufacturer_manufacturer');
+
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath('*/*/edit', ['manufacturer_id' => $model->getId()]);
                 }
@@ -54,7 +71,12 @@ class Save extends Action
             }
 
             $this->dataPersistor->set('manufacturer_manufacturer', $data);
-            return $resultRedirect->setPath('*/*/edit', ['manufacturer_id' => $this->getRequest()->getParam('manufacturer_id')]);
+            
+            if ($id) {
+                return $resultRedirect->setPath('*/*/edit', ['manufacturer_id' => $id]);
+            } else {
+                return $resultRedirect->setPath('*/*/new');
+            }
         }
         return $resultRedirect->setPath('*/*/');
     }

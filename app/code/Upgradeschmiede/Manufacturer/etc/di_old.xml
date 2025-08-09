@@ -4,7 +4,6 @@
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="manufacturer_manufacturer_listing_data_source" xsi:type="string">Upgradeschmiede\Manufacturer\Model\ResourceModel\Manufacturer\Grid\Collection</item>
-                <item name="manufacturer_maillog_listing_data_source" xsi:type="string">Upgradeschmiede\Manufacturer\Model\ResourceModel\MailLog\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
@@ -12,12 +11,6 @@
         <arguments>
             <argument name="mainTable" xsi:type="string">upgradeschmiede_manufacturer</argument>
             <argument name="resourceModel" xsi:type="string">Upgradeschmiede\Manufacturer\Model\ResourceModel\Manufacturer</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="Upgradeschmiede\Manufacturer\Model\ResourceModel\MailLog\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">upgradeschmiede_maillog</argument>
-            <argument name="resourceModel" xsi:type="string">Upgradeschmiede\Manufacturer\Model\ResourceModel\MailLog</argument>
         </arguments>
     </virtualType>
 </config>

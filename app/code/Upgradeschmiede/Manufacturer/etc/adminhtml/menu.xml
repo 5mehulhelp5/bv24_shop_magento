@@ -3,5 +3,6 @@
     <menu>
         <add id="Upgradeschmiede_Manufacturer::manufacturer" title="Hersteller" module="Upgradeschmiede_Manufacturer" sortOrder="100" resource="Upgradeschmiede_Manufacturer::manufacturer"/>
         <add id="Upgradeschmiede_Manufacturer::manufacturer_manage" title="Hersteller verwalten" module="Upgradeschmiede_Manufacturer" sortOrder="10" action="manufacturer/manufacturer" resource="Upgradeschmiede_Manufacturer::manufacturer" parent="Upgradeschmiede_Manufacturer::manufacturer"/>
+        <add id="Upgradeschmiede_Manufacturer::maillog" title="Mail-Log" module="Upgradeschmiede_Manufacturer" sortOrder="20" action="manufacturer/maillog" resource="Upgradeschmiede_Manufacturer::manufacturer" parent="Upgradeschmiede_Manufacturer::manufacturer"/>
     </menu>
 </config>
