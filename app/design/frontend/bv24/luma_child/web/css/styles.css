@@ -11,6 +11,13 @@ body {
     display: none !important;
 }
 
+@media only screen and (max-width: 767px) {
+    .navigation, .breadcrumbs, .page-header .header.panel, .header.content, .footer.content, .page-main, .page-wrapper > .widget, .page-wrapper > .page-bottom, .block.category.event, .top-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
 /* Links */
 .page-main a,
 .page-main .alink,
@@ -90,6 +97,19 @@ print {
         padding-right: 20px;
         width: auto;
     }
+
+
+    /* general page container */
+    [data-content-type='row'][data-appearance='contained']{
+        max-width: 1920px !important;
+    }
+
+    /* full width banner*/
+    [data-content-type='row'][data-appearance='full-width'] > .row-full-width-inner {
+        max-width: 1920px !important;
+    }
+
+    
 
     .navigation .level0.active>.level-top,
     .navigation .level0.has-active>.level-top {
@@ -232,6 +252,15 @@ print {
 
 /* Banner */
 .full-width-banner {
+    padding: 2rem 0;
+    box-sizing: border-box;
+    background: #990052;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px),
+print {
+    .full-width-banner {
     position: relative;
     left: 50%;
     right: 50%;
@@ -241,12 +270,28 @@ print {
     padding: 2rem 0;
     box-sizing: border-box;
     background: #990052;
-    overflow-x: hidden;
+    }
 }
 
 .full-width-banner p {
     margin-bottom: 0rem !important;
 }
+
+.inline-child .pagebuilder-column{
+    flex-direction: row !important;
+    justify-content: start !important;
+    padding-bottom: 1rem !important;
+}
+
+@media (min-width: 768px),
+print {
+    .inline-child .pagebuilder-column{
+        padding-bottom: 0rem !important;
+        justify-content: center !important;
+
+}
+}
+
 
 /* Produktinfos & Preis */
 .product-info-main .product-info-price,
