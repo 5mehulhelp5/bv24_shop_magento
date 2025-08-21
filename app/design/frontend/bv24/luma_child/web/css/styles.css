@@ -250,6 +250,26 @@ print {
     margin-top: -50px;
 }
 
+
+/* homepage */
+
+.homepage-hero .pagebuilder-slider{
+    min-height: 600px;
+}
+
+.homepage-hero .banner-list div[data-content-type="banner"]{
+    padding-bottom: 5px;
+}
+
+.homepage-hero .banner-list .pagebuilder-banner-wrapper{
+    height: 197px;
+}
+
+.homepage-hero .pagebuilder-slider{
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
 /* Banner */
 .full-width-banner {
     padding: 2rem 0;
