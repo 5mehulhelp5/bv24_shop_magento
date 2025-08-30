@@ -11,23 +11,6 @@ body {
     display: none !important;
 }
 
-@media only screen and (max-width: 767px) {
-
-    .navigation,
-    .breadcrumbs,
-    .page-header .header.panel,
-    .header.content,
-    .footer.content,
-    .page-main,
-    .page-wrapper>.widget,
-    .page-wrapper>.page-bottom,
-    .block.category.event,
-    .top-container {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
-
 /* Links */
 .page-main a,
 .page-main .alink,
