@@ -19,10 +19,11 @@
     "version": "2.4.8-p1",
     "require": {
         "magento/composer-dependency-version-audit-plugin": "~0.1",
-        "magento/composer-root-update-plugin": "^2.0.4",
-        "magento/product-community-edition": "2.4.8-p1",
+        "magento/composer-root-update-plugin": "^2.0",
+        "magento/product-community-edition": "2.4.8-p2",
         "magepal/magento2-gmailsmtpapp": "^3.0",
         "smile/elasticsuite": "^2.11",
+        "svdevelopments/slider-options": "^1.0",
         "yireo/magento2-webp2": "^0.14.3"
     },
     "autoload": {

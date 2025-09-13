@@ -367,6 +367,7 @@ return [
         'PayPal_BraintreeGiftWrapping' => 1,
         'PayPal_BraintreeGraphQl' => 1,
         'PayPal_BraintreeReward' => 1,
+        'SVDevelopments_SliderOptions' => 1,
         'Smile_ElasticsuiteAdminNotification' => 1,
         'Smile_ElasticsuiteCore' => 1,
         'Smile_ElasticsuiteCatalog' => 1,

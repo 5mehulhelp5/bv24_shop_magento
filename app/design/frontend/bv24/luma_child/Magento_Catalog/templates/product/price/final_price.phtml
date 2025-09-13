@@ -25,11 +25,61 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
 $product = $block->getSaleableItem();
 
 // Hole die Werte für Inhalt und Grundeinheit
-$inhalt = (float) $product->getData('inhalt');
-$grundeinheit = (float) $product->getData('grundeinheit');
+
+$inhalt = $product->getData('inhalt');
+if (!$inhalt) {
+    $data = $product->getData();
+    if (isset($data['document_source']['inhalt'])) {
+        $inhaltArr = $data['document_source']['inhalt'];
+        $inhalt = is_array($inhaltArr) ? $inhaltArr[0] : $inhaltArr;
+    }
+}
+//echo "INHALT : ".$inhalt;
+
+$inhalt = (float) $inhalt;
+
+$grundeinheit = $product->getData('grundeinheit');
+if (!$grundeinheit) {
+    $data = $product->getData();
+    if (isset($data['document_source']['grundeinheit'])) {
+        $grundeinheitArr = $data['document_source']['grundeinheit'];
+        $grundeinheit = is_array($grundeinheitArr) ? $grundeinheitArr[0] : $grundeinheitArr;
+    }
+}
+//echo "GRUNDEINHEIT : ".$grundeinheit;
+
+$grundeinheit = (float) $grundeinheit;
+
 $verpackungseinheit = $product->getAttributeText('verpackungseinheit');
+if (!$verpackungseinheit) {
+    $data = $product->getData();
+    if (isset($data['document_source']['option_text_verpackungseinheit'])) {
+        $verpackungseinheitArr = $data['document_source']['option_text_verpackungseinheit'];
+        $verpackungseinheit = is_array($verpackungseinheitArr) ? $verpackungseinheitArr[0] : $verpackungseinheitArr;
+    }
+}
+//echo "VERPACKUNGSEINHEIT : ".$verpackungseinheit;
 $verpackungseinheit_singuar = trim(preg_split('/[\(\/]/', $verpackungseinheit)[0]);
+
+
 $masseinheit = $product->getAttributeText('masseinheit');
+if (!$masseinheit) {
+    $data = $product->getData();
+    if (isset($data['document_source']['option_text_masseinheit'])) {
+        $masseinheitArr = $data['document_source']['option_text_masseinheit'];
+        $masseinheit = is_array($masseinheitArr) ? $masseinheitArr[0] : $masseinheitArr;
+    }
+}
+//echo "MASSEINHEIT : ".$masseinheit;
+
+$produkttyp = $product->getAttributeText('produkttyp');
+if (!$produkttyp) {
+    $data = $product->getData();
+    if (isset($data['document_source']['option_text_produkttyp'])) {
+        $produkttypArr = $data['document_source']['option_text_produkttyp'];
+        $produkttyp = is_array($produkttypArr) ? $produkttypArr[0] : $produkttypArr;
+    }
+}
 
 $preis = (float) $priceModel->getAmount()->getValue();
 $pseudop_price = (float) $priceModel->getAmount()->getValue();
@@ -46,7 +96,12 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
 
 <?php if ($block->hasSpecialPrice()) : ?>
 
+
     <span class="special-price">
+
+
+        <!-- <pre>
+</pre> -->
         <!-- mawa: price per unit -->
         <?php if ($inhalt > 0 && $grundeinheit > 0) {
             $preis = (float) $finalPriceModel->getAmount()->getValue();
@@ -143,8 +198,8 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
             <?= __('%1 €', number_format($preisProEinheit, 2, ',', '.'), $masseinheit) ?>
         </span>
         <span class="price-unit">
-                <?= __('/ %1', $masseinheit) ?>
-            </span>
+            <?= __('/ %1', $masseinheit) ?>
+        </span>
     <?php } ?>
     <!-- ** -->
 
@@ -163,7 +218,7 @@ $rabatt = ($regular > 0 && $special < $regular) ? round((($regular - $special) /
             <!-- mawa: price per unit -->
             <?php if ($verpackungseinheit_singuar): ?>
                 <span class="price-per-unit-hint">
-                        <?= __('/ %1 (%2 %3)', $verpackungseinheit_singuar, $inhalt, $masseinheit) ?>
+                    <?= __('/ %1 (%2 %3)', $verpackungseinheit_singuar, $inhalt, $masseinheit) ?>
                 </span>
             <?php endif; ?>
             <!-- ** -->
