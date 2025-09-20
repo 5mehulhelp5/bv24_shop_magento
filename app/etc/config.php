@@ -380,6 +380,7 @@ return [
         'Smile_ElasticsuiteIndices' => 1,
         'Smile_ElasticsuiteAnalytics' => 1,
         'Smile_ElasticsuiteVirtualCategory' => 1,
+        'Snowdog_Menu' => 1,
         'Upgradeschmiede_Manufacturer' => 1,
         'Weapptec_Bv24Tools' => 1,
         'Yireo_CspUtilities' => 1,

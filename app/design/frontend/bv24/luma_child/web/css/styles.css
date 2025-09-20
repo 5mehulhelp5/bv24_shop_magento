@@ -130,6 +130,15 @@ print {
     margin-right: 10px !important;
 }
 
+.search-autocomplete {
+    border: 1px solid #990052;
+    /* Magenta mit 25% Deckkraft */
+    box-shadow: 0 2px 8px -2px #99005220;
+    background: #fff;
+    z-index: 200;
+
+}
+
 @media (min-width: 768px),
 print {
 
@@ -180,7 +189,7 @@ print {
         padding-left: 15px;
         position: relative;
         width: 300px !important;
-        z-index: 4;
+        z-index: 200;
     }
 
     /* search field */
@@ -188,7 +197,6 @@ print {
     .block-search:has(#minisearch-autocomplete-top-search:hover) {
         width: 60vw !important;
         transition: width 0.2s;
-        z-index: 200;
         position: absolute;
         right: 10%;
     }
@@ -204,14 +212,8 @@ print {
 
 
 
-    .search-autocomplete {
-        border: 1px solid rgba(153, 0, 82, 0.25);
-        /* Magenta mit 25% Deckkraft */
-        box-shadow: 0 2px 8px -2px #99005220;
-        background: #fff;
-    }
 
-    
+
     /*
      input#minisearch-input-top-search:focus {
         position: absolute;
@@ -913,11 +915,6 @@ print {
         width: calc((100% - 6%) / 3) !important;
     }
 }
-
-
-
-
-
 
 /* Produktbox & Details */
 .product-item-name,

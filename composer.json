@@ -23,6 +23,7 @@
         "magento/product-community-edition": "2.4.8-p2",
         "magepal/magento2-gmailsmtpapp": "^3.0",
         "smile/elasticsuite": "^2.11",
+        "snowdog/module-menu": "^2.29",
         "svdevelopments/slider-options": "^1.0",
         "yireo/magento2-webp2": "^0.14.3"
     },
