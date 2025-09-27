@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Model\Order\Item">
+        <plugin name="custom_order_item_status" 
+                type="Upgradeschmiede\OrderItemStatus\Plugin\Sales\Model\Order\Item" 
+                sortOrder="1"/>
+    </type>
+</config>

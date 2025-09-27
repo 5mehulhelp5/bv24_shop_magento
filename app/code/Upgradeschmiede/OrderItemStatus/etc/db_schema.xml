@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order_item" resource="sales">
+        <column name="custom_status" xsi:type="varchar" nullable="true" length="32" comment="Custom Item Status"/>
+        <index referenceId="SALES_ORDER_ITEM_CUSTOM_STATUS">
+            <column name="custom_status"/>
+        </index>
+    </table>
+</schema>

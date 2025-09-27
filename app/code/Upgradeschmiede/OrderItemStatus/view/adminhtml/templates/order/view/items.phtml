@@ -1,0 +1,125 @@
+<?php
+/**
+ * Order Items Template with Custom Status
+ *
+ * @var $block \Upgradeschmiede\OrderItemStatus\Block\Adminhtml\Order\View\Items
+ */
+
+$statusOptions = [
+    'offen' => __('Offen'),
+    'automatische_bestellung' => __('Automatische Bestellung'),
+    'automatische_bestellung_done' => __('Automatische Bestellung abgeschlossen')
+];
+
+$order = $block->getOrder();
+?>
+
+<style>
+.order-item-status-select {
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+}
+.status-column { min-width: 150px; }
+.status-offen { color: #ff6b35; font-weight: bold; }
+.status-automatische_bestellung { color: #4a90e2; font-weight: bold; }
+.status-bestellung_abgeschlossen { color: #7ed321; font-weight: bold; }
+</style>
+
+<?php if ($order && $order->getItemsCollection()->count()): ?>
+<div class="admin__table-wrapper">
+    <table class="data-table admin__table-secondary order-items">
+        <thead>
+            <tr class="headings">
+                <th class="col-product"><span><?= $block->escapeHtml(__('Product')) ?></span></th>
+                <th class="col-status status-column"><span><?= $block->escapeHtml(__('Item Status')) ?></span></th>
+                <th class="col-price"><span><?= $block->escapeHtml(__('Price')) ?></span></th>
+                <th class="col-qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></th>
+                <th class="col-subtotal"><span><?= $block->escapeHtml(__('Subtotal')) ?></span></th>
+                <th class="col-tax"><span><?= $block->escapeHtml(__('Tax Amount')) ?></span></th>
+                <th class="col-total"><span><?= $block->escapeHtml(__('Row Total')) ?></span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($order->getAllVisibleItems() as $item): ?>
+                <?php
+                    /** @var \Magento\Sales\Model\Order\Item $item */
+                    $currentStatus = $item->getCustomStatus() ?: 'offen';
+                ?>
+                <tr>
+                    <td class="col-product">
+                        <span class="product-title"><?= $block->escapeHtml($item->getName()) ?></span>
+                        <div class="item-options">
+                            <span class="item-sku">
+                                <?= $block->escapeHtml(__('SKU: %1', $item->getSku())) ?>
+                            </span>
+                            <?php if ($item->getProductOptions()):
+                                $options = $item->getProductOptions();
+                                if (isset($options['options'])):
+                                    foreach ($options['options'] as $option): ?>
+                                        <div class="item-option">
+                                            <strong><?= $block->escapeHtml($option['label'] ?? '') ?>:</strong>
+                                            <?= $block->escapeHtml($option['value'] ?? '') ?>
+                                        </div>
+                                    <?php endforeach;
+                                endif;
+                            endif; ?>
+                        </div>
+                    </td>
+
+                    <td class="col-status status-column">
+                        <select
+                            class="order-item-status-select status-<?= $block->escapeHtmlAttr($currentStatus) ?>"
+                            data-item-id="<?= (int)$item->getItemId() ?>">
+                            <?php foreach ($statusOptions as $value => $label): ?>
+                                <option value="<?= $block->escapeHtmlAttr($value) ?>"
+                                    <?= ($currentStatus === $value) ? 'selected="selected"' : '' ?>>
+                                    <?= $block->escapeHtml($label) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+
+                    <td class="col-price">
+                        <span class="price"><?= $block->formatPrice((float)$item->getPrice()) ?></span>
+                    </td>
+                    <td class="col-qty">
+                        <span class="qty"><?= (int)$item->getQtyOrdered() ?></span>
+                    </td>
+                    <td class="col-subtotal">
+                        <span class="price"><?= $block->formatPrice((float)$item->getRowTotal()) ?></span>
+                    </td>
+                    <td class="col-tax">
+                        <span class="price"><?= $block->formatPrice((float)$item->getTaxAmount()) ?></span>
+                    </td>
+                    <td class="col-total">
+                        <span class="price"><?= $block->formatPrice((float)$item->getRowTotalInclTax()) ?></span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<?php else: ?>
+    <div class="admin__data-grid-wrap">
+        <div class="admin__data-grid-loading-mask">
+            <div class="admin__data-grid-loading-wrap">
+                <?= $block->escapeHtml(__('No items found.')) ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<!-- Variante A: URL inkl. Secret-Key direkt aus PHP -->
+<script>
+    window.txOrderItemStatusUrl = '<?= $block->escapeJs($block->getUrl('orderitemstatus/order/updateItemStatus')); ?>';
+</script>
+
+<!-- Modul genau einmal initialisieren -->
+<script>
+    require(['orderItemStatus'], function (mod) {
+        mod.init();
+    });
+</script>

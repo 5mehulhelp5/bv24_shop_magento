@@ -1,0 +1,10 @@
+<?php
+/**
+ * Template for "Show All Results" link in autocomplete
+ */
+?>
+<div class="show-all-results"
+     onclick="document.querySelector('form.minisearch').submit();"
+     style="cursor: pointer;">
+    <?= $escaper->escapeHtml(__('Alle Suchergebnisse anzeigen')) ?>
+</div>

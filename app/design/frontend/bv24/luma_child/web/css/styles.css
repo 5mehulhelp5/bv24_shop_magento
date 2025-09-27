@@ -28,17 +28,7 @@ textarea:focus {
     transition: border-bottom 0.2s, box-shadow 0.2s;
 }
 
-input#minisearch-input-top-search {
-    height: 4rem !important;
-    border-bottom: 0.2rem solid #990052;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    padding: 8px 12px;
-    font-size: 1.3rem;
-    border-radius: 0px;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
+
 
 /* Buttons */
 .action.primary,
@@ -69,6 +59,129 @@ input#minisearch-input-top-search {
     background: #fff !important;
 }
 
+/* Mega Menu Styles */
+.mega-navigation {
+    position: relative;
+}
+
+.mega-navigation > ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+
+.mega-navigation .level0 {
+    position: relative;
+}
+
+.mega-navigation .level0 > .level-top {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.mega-navigation .level0:hover > .level-top,
+.mega-navigation .level0.active > .level-top {
+    color: #990052;
+    border-bottom-color: #990052;
+}
+
+/* Mega Menu Dropdown */
+.mega-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.08),
+        0 8px 32px rgba(153, 0, 82, 0.04),
+        0 0 0 1px rgba(153, 0, 82, 0.1);
+    border-radius: 0 0 20px 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+}
+
+.mega-navigation .level0:hover .mega-menu-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mega-menu-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.mega-menu-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 40px 0;
+}
+
+.mega-menu-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Level 2 Titles */
+.level2-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #990052;
+    text-decoration: none;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(153, 0, 82, 0.1);
+    transition: color 0.2s ease;
+}
+
+.level2-title:hover {
+    color: #bb0066;
+}
+
+/* Level 3 Lists */
+.level3-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.level3-item {
+    margin-bottom: 8px;
+}
+
+.level3-item a {
+    display: block;
+    padding: 8px 12px;
+    color: #666;
+    text-decoration: none;
+    font-size: 1.3rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.level3-item a:hover {
+    background: rgba(153, 0, 82, 0.05);
+    color: #990052;
+    transform: translateX(4px);
+}
+
 @media (min-width: 768px),
 print {
     .nav-sections {
@@ -77,6 +190,48 @@ print {
         -webkit-flex-basis: auto;
         flex-basis: auto;
         margin-bottom: 5px;
+    }
+
+    /* Desktop Mega Menu Enhancements */
+    .mega-navigation .level0 > .level-top {
+        position: relative;
+    }
+
+    .mega-navigation .level0 > .level-top::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: #990052;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .mega-navigation .level0:hover > .level-top::after {
+        width: 100%;
+    }
+
+    /* Hide mega menu on mobile */
+    .mega-menu-dropdown {
+        display: block;
+    }
+}
+
+/* Mobile menu (hide mega menu features) */
+@media (max-width: 767px) {
+    .mega-menu-dropdown {
+        display: none;
+    }
+
+    .mega-navigation > ul {
+        flex-direction: column;
+    }
+
+    .mega-navigation .level0 > .level-top {
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
     }
 }
 
@@ -102,42 +257,152 @@ print {
     border-top: none !important;
 }
 
-.search-autocomplete dl dt:hover {
-    background: none !important;
+/* search */
+
+input#minisearch-input-top-search {
+    height: 4.8rem !important;
+    border: 2px solid rgba(153, 0, 82, 0.8);
+    border-radius: 24px;
+    padding: 16px 20px;
+    font-size: 1.4rem;
+    background: #fff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+input#minisearch-input-top-search:focus {
+    border-color: #990052;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 8px 32px rgba(153, 0, 82, 0.16), 0 0 0 4px rgba(153, 0, 82, 0.1);
+    transform: translateY(-2px);
+}
+
+.search-autocomplete dl {
+    margin: 0;
+    padding: 0;
+}
+
+.search-autocomplete dl dt {
+    background: linear-gradient(135deg, rgba(153, 0, 82, 0.05), rgba(153, 0, 82, 0.02));
+    margin: 8px 16px 0 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #990052;
+    border: none !important;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px);
+}
+
+.search-autocomplete dl dt:first-child {
+    margin-top: 0;
+}
+
+.search-autocomplete dl dd {
+    margin: 0 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.search-autocomplete dl dd:hover {
+    background: rgba(153, 0, 82, 0.04);
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(153, 0, 82, 0.08);
 }
 
 .search-autocomplete .product-name {
-    font-weight: bold !important;
+    font-weight: 600 !important;
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 4px;
 }
 
 .search-autocomplete .product-type {
-    font-weight: normal !important;
+    font-weight: 400 !important;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 8px;
 }
 
 .search-autocomplete .price-unit {
-    font-weight: normal !important;
+    font-weight: 600 !important;
+    font-size: 1.4rem;
+    color: #990052;
 }
 
-.search-autocomplete dl dd,
-.search-autocomplete dl dt {
-    border: none !important;
+.search-autocomplete .product-image-box {
+    margin-right: 16px !important;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .search-autocomplete .product-image-box img {
-    width: 60px !important;
-    height: 60px !important;
+    width: 64px !important;
+    height: 64px !important;
     object-fit: cover !important;
-    margin-right: 10px !important;
+    transition: transform 0.2s ease;
+}
+
+.search-autocomplete dl dd:hover .product-image-box img {
+    transform: scale(1.05);
 }
 
 .search-autocomplete {
-    border: 1px solid #990052;
-    /* Magenta mit 25% Deckkraft */
-    box-shadow: 0 2px 8px -2px #99005220;
-    background: #fff;
-    z-index: 200;
-
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 20px 60px rgba(153, 0, 82, 0.12),
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(153, 0, 82, 0.1);
+    z-index: 2000;
+    position: absolute !important;
+    padding: 16px 0;
+    margin-top: 8px;
+    overflow: hidden;
+    animation: autocompleteSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+@keyframes autocompleteSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Show All Results Link */
+.search-autocomplete .show-all-results {
+    margin: 8px 16px 0 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #990052, #bb0066);
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 1px solid rgba(153, 0, 82, 0.1);
+    margin-top: 8px;
+}
+
+.search-autocomplete .show-all-results:hover {
+    background: linear-gradient(135deg, #bb0066, #990052);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(153, 0, 82, 0.3);
+}
+
 
 @media (min-width: 768px),
 print {
@@ -192,6 +457,10 @@ print {
         z-index: 200;
     }
 
+    .block-search .control {
+        position: relative;
+    }
+
     /* search field */
     .block-search:has(:focus),
     .block-search:has(#minisearch-autocomplete-top-search:hover) {
@@ -210,7 +479,7 @@ print {
         display: none;
     }
 
-
+ 
 
 
 
@@ -253,11 +522,34 @@ print {
 /* Suche */
 @media (min-width: 768px),
 print {
+    .block-search .action.search {
+        position: absolute!important;
+        right: 8px;
+        top: 50% !important;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #990052, #bb0066);
+        border: none;
+        border-radius: 16px;
+        width: 40px;
+        height: 40px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(153, 0, 82, 0.3);
+        z-index: 10;
+    }
+
+    .block-search .action.search:hover {
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 6px 20px rgba(153, 0, 82, 0.4);
+    }
+
     .block-search .action.search:before {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: none !important;
-        font-size: 1.9rem !important;
-        line-height: 4rem !important;
+        font-size: 1.6rem !important;
+        line-height: 1 !important;
         color: #990052 !important;
         content: '\f0d1' !important;
         font-family: 'remixicon' !important;
@@ -365,6 +657,7 @@ print {
     right: 0rem !important;
     width: 30px !important;
     height: 50px !important;
+    z-index: 1 !important;
 }
 
 .slick-next:before {
@@ -378,7 +671,7 @@ print {
     left: 0rem !important;
     width: 30px !important;
     height: 50px !important;
-
+    z-index: 1 !important;
 }
 
 .slick-prev:before {

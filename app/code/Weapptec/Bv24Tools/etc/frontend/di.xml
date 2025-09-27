@@ -1,9 +1,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-     <type name="Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\AttributeConfig">
+
+    <!-- Configure autocomplete data providers order: Terms -> Categories -> Products -->
+    <type name="Magento\Search\Model\Autocomplete">
         <arguments>
-            <argument name="additionalSelectedAttributes" xsi:type="array">
-                <item name="produkttyp" xsi:type="string">produkttyp</item>
-            </argument>
             <argument name="dataProviders" xsi:type="array">
                 <item name="10" xsi:type="object">Smile\ElasticsuiteCore\Model\Autocomplete\Terms\DataProvider</item>
                 <item name="20" xsi:type="object">Smile\ElasticsuiteCatalog\Model\Autocomplete\Category\DataProvider</item>
@@ -12,4 +11,14 @@
             </argument>
         </arguments>
     </type>
+
+    <!-- Configure additional product attributes for autocomplete -->
+    <type name="Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\AttributeConfig">
+        <arguments>
+            <argument name="additionalSelectedAttributes" xsi:type="array">
+                <item name="produkttyp" xsi:type="string">produkttyp</item>
+            </argument>
+        </arguments>
+    </type>
+
 </config>
