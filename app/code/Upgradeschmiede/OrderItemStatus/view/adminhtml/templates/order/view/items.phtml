@@ -5,12 +5,7 @@
  * @var $block \Upgradeschmiede\OrderItemStatus\Block\Adminhtml\Order\View\Items
  */
 
-$statusOptions = [
-    'offen' => __('Offen'),
-    'automatische_bestellung' => __('Automatische Bestellung'),
-    'automatische_bestellung_done' => __('Automatische Bestellung abgeschlossen')
-];
-
+$statusOptions = $block->get_itemstatus();
 $order = $block->getOrder();
 ?>
 
@@ -25,7 +20,7 @@ $order = $block->getOrder();
 .status-column { min-width: 150px; }
 .status-offen { color: #ff6b35; font-weight: bold; }
 .status-automatische_bestellung { color: #4a90e2; font-weight: bold; }
-.status-bestellung_abgeschlossen { color: #7ed321; font-weight: bold; }
+.status-automatische_bestellung_done { color: #7ed321; font-weight: bold; }
 </style>
 
 <?php if ($order && $order->getItemsCollection()->count()): ?>
