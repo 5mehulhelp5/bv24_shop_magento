@@ -214,16 +214,19 @@ print {
 */
     .block-search:has(:focus),
     .block-search:has(.active) {
-        width: 60vw !important;
+        width: 70vw !important;
         transition: width 0.2s;
         position: absolute;
         right: 10%;
     }
 
+    .logo {
+        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     .header.content:has(.block-search:focus-within) .logo,
     .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
         max-width: 15%;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }    
 }
 
@@ -238,6 +241,23 @@ print {
 
 /* Tablets (Portrait, 600px - 899px) */
 @media only screen and (min-width: 600px) and (max-width: 899px) {
+
+    .block-search:has(:focus),
+    .block-search:has(.active) {
+        width: 70vw !important;
+        transition: width 0.2s;
+        position: absolute;
+        right: 10%;
+    }
+
+    .logo {
+        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header.content:has(.block-search:focus-within) .logo,
+    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
+        max-width: 15%;
+    }    
     
 }
 
@@ -245,13 +265,45 @@ print {
 
 
 /* Tablets (Landscape, 900px - 1199px) */
-@media only screen and (min-width: 900px) /*and (max-width: 1199px) */{
-    /* search field */
+@media only screen and (min-width: 900px) and (max-width: 1199px) {
+    .block-search:has(:focus),
+    .block-search:has(.active) {
+        width: 60vw !important;
+        transition: width 0.2s;
+        position: absolute;
+        right: 10%;
+    }
+
+    .logo {
+        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header.content:has(.block-search:focus-within) .logo,
+    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
+        max-width: 20%;
+    }    
     
 }
 
 /* Desktop (1200px - 1599px) */
 @media only screen and (min-width: 1200px) and (max-width: 1599px) {
+
+    .block-search:has(:focus),
+    .block-search:has(.active) {
+        width: 60vw !important;
+        transition: width 0.2s;
+        position: absolute;
+        right: 10%;
+    }
+
+    .logo {
+        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header.content:has(.block-search:focus-within) .logo,
+    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
+        max-width: 25%;
+    }    
     
 }
 
