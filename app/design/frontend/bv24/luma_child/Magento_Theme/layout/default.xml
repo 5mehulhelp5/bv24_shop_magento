@@ -1,14 +1,24 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
 
     <body>
         <!-- USP-Banner in navigation-sections -->
-         <referenceContainer name="page.top">
+        <referenceContainer name="page.top">
             <block class="Magento\Framework\View\Element\Template"
-                   name="usp.banner"
-                   template="Magento_Theme::html/usp-banner.phtml"
-                   before="breadcrumbs"/>
+                name="usp.banner"
+                template="Magento_Theme::html/usp-banner.phtml"
+                before="breadcrumbs" />
         </referenceContainer>
+
+        <!-- Snowdog Menu Integration -->
+        <referenceBlock name="top.menu">
+            <block class="Snowdog\Menu\Block\Menu" name="snowdog.menu.main" as="snowdog.menu.main"
+                template="Snowdog_Menu::menu.phtml">
+                <arguments>
+                    <argument name="menu_identifier" xsi:type="string">menu_main</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
     </body>
 </page>

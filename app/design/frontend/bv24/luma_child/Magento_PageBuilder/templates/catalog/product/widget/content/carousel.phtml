@@ -85,10 +85,14 @@ use Magento\Framework\App\Action\Action;
                     <strong class="product-item-name">
                         <a title="<?= $escaper->escapeHtml($_item->getName()) ?>"
                            href="<?= $escaper->escapeUrl($block->getProductUrl($_item)) ?>"
-                           class="product-item-link">
+                           class="product-item-link"
+                           style="font-size: 1.5rem; font-weight: bold; color: #333;">
                             <?= $escaper->escapeHtml($_item->getName()) ?>
                         </a>
                     </strong>
+                    <div class="bv24-producttype">
+                                <span><?= $escaper->escapeHtml($_item->getAttributeText('produkttyp')) ?></span>
+                            </div>
                     <?php if ($templateType) { ?>
                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                     <?php } ?>

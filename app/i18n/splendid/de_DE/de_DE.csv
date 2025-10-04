@@ -7367,7 +7367,7 @@ Now accepting PayPal (150 X 40),Akzeptiert nun PayPal (150 X 40),module,Magento_
 Now accepting PayPal (150 X 60),Akzeptiert nun PayPal (150 X 60),,
 Now accepting PayPal (150 X 60),Akzeptiert nun PayPal (150 X 60),module,Magento_Paypal
 Now Online,Jetzt online,,
-Now Shopping by,Einkaufen nach,,
+Now Shopping by,aktive Filter,,
 Now you can add products to your gift registry.,Jetzt können Sie Produkte zur Ihrer Geschenkeliste hinzufügen.,,
 Number,Nummer,,
 "Number of authorizations, captures or refunds has exceeded allowed limits.","Die Anzahl der Genehmigungen, Einziehungen oder Rückerstattungen hat die zulässigen Grenzen überschritten.",module,Amazon_Payment
@@ -10135,7 +10135,7 @@ Shipping Settings,Versandeinstellungen,,
 Shipping Settings Section,Abschnitt Versandeinstellungn,module,Magento_Shipping
 Shipping State/Province,Versand-Bundesland / -Provinz,,
 Shipping To,Versand an,,
-Shop By,Einkaufen nach,,
+Shop By,Filter,,
 Shop Name,Name des Shops,,
 Shop now using (150 X 40),Shop nutzt jetzt (150 X 40),,
 Shop now using (150 X 40),Shop nutzt jetzt (150 X 40),module,Magento_Paypal
@@ -10503,7 +10503,7 @@ Something went wrong. Please try to place the order again.,"Etwas ist schief gel
 "Sorry, we haven't installed the default display currency you selected.",Leider haben wir die von Ihnen ausgewählte Standardanzeigewährung nicht installiert.,,
 "Sorry, we're unable to complete this request.","Es tut uns leid, wir können diese Anforderung nicht abschließen.",,
 "Sorry, you need permissions to view this content.","Entschuldigung, Sie brauchen Berechtigungen, um diesen Inhalt anzusehen.",module,Magento_Backend
-Sort By,Sortieren nach,,
+Sort By,Sortierung,,
 Sort by,Sortieren nach,module,Magento_AdobeStockImageAdminUi
 Sort Custom Option,Benutzerdefinierte Optionen sortieren,,
 Sort Custom Options,Benutzerdefinierte Optionen sortieren,,

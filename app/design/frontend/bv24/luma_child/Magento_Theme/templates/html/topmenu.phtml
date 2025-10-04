@@ -1,131 +1,276 @@
 <?php
 /**
- * Mega Menu Top navigation
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Top menu for store
  *
  * @var $block \Magento\Theme\Block\Html\Topmenu
  */
 
 $columnsLimit = $block->getColumnsLimit() ?: 0;
-$_menuHtml = $block->getHtml('level-top', 'submenu', $columnsLimit);
+$_menuHtml = $block->getHtml('level-top', 'submenu', $columnsLimit)
 ?>
 
-<nav class="navigation mega-navigation" data-action="navigation">
+<nav class="navigation" data-action="navigation">
     <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
         <?= /* @noEscape */ $_menuHtml?>
         <?= $block->getChildHtml() ?>
     </ul>
 </nav>
 
-<style>
-/* Apply mega menu styles only on desktop (768px and up) */
-@media (min-width: 768px) {
-    .mega-navigation ul ul {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(20px);
-        box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.08),
-            0 8px 32px rgba(153, 0, 82, 0.04),
-            0 0 0 1px rgba(153, 0, 82, 0.1);
-        border-radius: 0 0 20px 20px;
-        width: 100vw;
-        margin-left: calc(-50vw + 50%);
-        display: none;
-        z-index: 1000;
-        max-width: 1920px;
-        margin-left: auto;
-        margin-right: auto;
-        left: 50%;
-        transform: translateX(-50%);
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let isMobileInitialized = false;
+
+    initializeMobileMenu();
+
+    // Listen for window resize events
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            initializeMobileMenu();
+        }, 250); // Debounce resize events
+    });
+
+    function initializeMobileMenu() {
+        const isMobile = window.innerWidth <= 767;
+
+        if (isMobile && !isMobileInitialized) {
+            // Initialize mobile functionality
+            addViewAllLinks();
+            setupMobileToggle();
+            expandToActiveCategory();
+            isMobileInitialized = true;
+        } else if (!isMobile && isMobileInitialized) {
+            // Clean up mobile functionality when switching to desktop
+            cleanupMobileMenu();
+            isMobileInitialized = false;
+        }
     }
 
-    .mega-navigation li:hover > ul {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 40px;
-        padding: 40px;
+    function cleanupMobileMenu() {
+        // Remove expanded classes
+        document.querySelectorAll('.navigation .expanded').forEach(function(item) {
+            item.classList.remove('expanded');
+        });
+
+        // Reset inline styles
+        document.querySelectorAll('.navigation .submenu').forEach(function(submenu) {
+            submenu.style.maxHeight = '';
+            submenu.style.display = '';
+        });
+
+        // Remove "Alle [Kategorie]" links
+        document.querySelectorAll('.navigation .view-all-link').forEach(function(link) {
+            link.remove();
+        });
+
+        // Restore parent classes that were removed for non-toggleable items
+        // This is a bit complex as we would need to track original state
+        // For now, we rely on page refresh for full cleanup
     }
 
-    /* Level 2 Categories */
-    .mega-navigation ul ul > li {
-        width: auto;
-        display: block;
-        margin: 0;
+
+    function addViewAllLinks() {
+        // Level 0 doesn't need "Alle [Kategorie]" links anymore
+        // Only Level 1 will get them via setupMobileToggle()
     }
 
-    .mega-navigation ul ul > li > a {
-        font-size: 1.6rem;
-        font-weight: 600;
-        color: #990052;
-        text-decoration: none;
-        margin-bottom: 16px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid rgba(153, 0, 82, 0.1);
-        display: block;
+    function setupMobileToggle() {
+        const parentItems = document.querySelectorAll('.navigation .level0.parent');
+
+        parentItems.forEach(function(item) {
+            const parentLink = item.querySelector('.level-top');
+            const submenu = item.querySelector('.submenu');
+
+            if (parentLink && submenu) {
+                // Add click handler only to the main parent link
+                parentLink.addEventListener('click', function(e) {
+                    // Only prevent default for the parent link itself
+                    if (e.target === parentLink || parentLink.contains(e.target)) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // Close other expanded items (only level0)
+                        document.querySelectorAll('.navigation .level0.parent.expanded').forEach(function(otherItem) {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('expanded');
+                                // Also hide submenu for closed items
+                                const otherSubmenu = otherItem.querySelector('.submenu');
+                                if (otherSubmenu) {
+                                    otherSubmenu.style.maxHeight = '';
+                                    otherSubmenu.style.display = '';
+                                }
+                            }
+                        });
+
+                        // Toggle current item
+                        const isExpanded = item.classList.contains('expanded');
+                        if (isExpanded) {
+                            item.classList.remove('expanded');
+                            // Hide submenu
+                            submenu.style.maxHeight = '';
+                            submenu.style.display = '';
+                        } else {
+                            item.classList.add('expanded');
+                            // Show submenu
+                            submenu.style.maxHeight = '1000px';
+                            submenu.style.display = 'block';
+                        }
+                    }
+                }, true);
+
+                // Keep href for Level 0 - they should remain clickable links
+            }
+        });
+
+        // Handle level1+ parent items - simpler approach
+        const level1Parents = document.querySelectorAll('.navigation .level1.parent, .navigation .level2.parent');
+        level1Parents.forEach(function(item) {
+            const parentLink = item.querySelector('a');
+            const submenu = item.querySelector('.submenu');
+
+
+            if (parentLink && submenu) {
+                // Check if submenu has actual li children that are not view-all-links
+                const submenuItems = submenu.querySelectorAll('li:not(.view-all-link)');
+
+                // Check if any of the submenu items have their own submenus (are parents)
+                const hasSubParents = Array.from(submenuItems).some(li => li.classList.contains('parent'));
+
+                if (submenuItems.length > 1 || hasSubParents) {
+                    // This item has meaningful submenu content - make it toggleable
+                    const categoryName = parentLink.textContent.trim();
+                    const categoryUrl = parentLink.getAttribute('href');
+
+                    // Add "Alle [Kategorie]" link as first menu item in submenu
+                    const viewAllLink = document.createElement('li');
+                    viewAllLink.className = 'view-all-link';
+                    viewAllLink.innerHTML = `<a href="${categoryUrl}">Alle ${categoryName}</a>`;
+
+                    // Insert as first child of submenu
+                    submenu.insertBefore(viewAllLink, submenu.firstChild);
+
+                    // Add toggle functionality to the parent link
+                    parentLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // Close other expanded items at same level
+                        const sameLevel = item.classList.contains('level1') ? '.level1.parent' : '.level2.parent';
+                        document.querySelectorAll(`.navigation ${sameLevel}.expanded`).forEach(function(otherItem) {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('expanded');
+                            }
+                        });
+
+                        // Toggle current item
+                        item.classList.toggle('expanded');
+                    });
+                } else {
+                    // This item has only one submenu item or no meaningful content - treat as normal link
+
+                    // Remove parent class to prevent toggle styling
+                    item.classList.remove('parent');
+
+                    // Don't add event listener that prevents default
+                    // Just let it work as a normal link
+                }
+            } else if (parentLink && !submenu) {
+                // No submenu at all - definitely a normal link
+            }
+        });
     }
 
-    .mega-navigation ul ul > li > a:hover {
-        color: #bb0066;
-    }
+    function expandToActiveCategory() {
+        // Only expand on category pages, not on homepage
+        const isHomepage = window.location.pathname === '/' || window.location.pathname === '/index.php' || window.location.pathname.endsWith('/');
+        if (isHomepage) {
+            return;
+        }
 
-    /* Level 3 Categories - Always visible under Level 2 */
-    .mega-navigation ul ul ul {
-        position: static !important;
-        display: block !important;
-        width: auto !important;
-        background: none !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        margin: 8px 0 0 0 !important;
-        padding: 0 !important;
-        backdrop-filter: none !important;
-        transform: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
+        // Find active category (marked with 'active', 'has-active', or 'current' class)
+        const activeItems = document.querySelectorAll('.navigation .active, .navigation .has-active, .navigation .current');
 
-    .mega-navigation ul ul ul li {
-        display: block !important;
-        margin-bottom: 6px !important;
-        width: auto !important;
-    }
+        // Also check for items with active links
+        const activeLinks = document.querySelectorAll('.navigation a.ui-state-active, .navigation a[aria-current="page"]');
 
-    .mega-navigation ul ul ul li a {
-        display: block !important;
-        padding: 6px 16px !important;
-        color: #666 !important;
-        text-decoration: none !important;
-        font-size: 1.25rem !important;
-        border-radius: 6px !important;
-        transition: all 0.2s ease !important;
-        margin-left: 0 !important;
-        background: none !important;
-    }
+        // Combine both searches
+        const allActiveElements = [...activeItems, ...activeLinks];
 
-    .mega-navigation ul ul ul li a:hover {
-        background: rgba(153, 0, 82, 0.05) !important;
-        color: #990052 !important;
-        transform: translateX(4px) !important;
-    }
+        // Debug: Log what we found
 
-    /* Make sure Level 3 shows immediately when Level 1 is hovered */
-    .mega-navigation li:hover ul ul {
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
+        allActiveElements.forEach(function(activeElement) {
 
-    /* Ensure proper spacing between Level 2 and its Level 3 children */
-    .mega-navigation ul ul > li {
-        margin-bottom: 24px;
-    }
+            // Find the closest parent li element
+            let currentItem = activeElement.closest('li');
 
-    /* Hide deeper levels (Level 4+) */
-    .mega-navigation ul ul ul ul {
-        display: none !important;
+            // Walk up the menu hierarchy and expand all parent menus
+            while (currentItem) {
+
+                if (currentItem.classList.contains('parent')) {
+                    currentItem.classList.add('expanded');
+
+                    // For Level 0, use different approach - trigger the max-height CSS rule
+                    if (currentItem.classList.contains('level0')) {
+                        const submenu = currentItem.querySelector('.submenu');
+                        if (submenu) {
+                            // Force the submenu to be visible by setting max-height directly
+                            submenu.style.maxHeight = '1000px';
+                            submenu.style.display = 'block';
+                        }
+                    }
+                }
+
+                // Move to the next parent li element
+                const parentSubmenu = currentItem.closest('.submenu');
+                if (parentSubmenu) {
+                    currentItem = parentSubmenu.closest('li');
+                } else {
+                    break;
+                }
+            }
+        });
+
+        // Also check current URL against menu links
+        const currentUrl = window.location.href;
+
+        const allMenuLinks = document.querySelectorAll('.navigation a[href]');
+
+        allMenuLinks.forEach(function(link) {
+            if (link.href === currentUrl || link.href.includes(currentUrl.split('?')[0])) {
+                let currentItem = link.closest('li');
+
+                // Walk up and expand all parent menus
+                while (currentItem) {
+                    if (currentItem.classList.contains('parent')) {
+                        currentItem.classList.add('expanded');
+
+                        // For Level 0, force visibility
+                        if (currentItem.classList.contains('level0')) {
+                            const submenu = currentItem.querySelector('.submenu');
+                            if (submenu) {
+
+                                submenu.style.maxHeight = '1000px';
+                                submenu.style.display = 'block';
+                            }
+                        }
+                    }
+
+                    const parentSubmenu = currentItem.closest('.submenu');
+                    if (parentSubmenu) {
+                        currentItem = parentSubmenu.closest('li');
+                    } else {
+                        break;
+                    }
+                }
+            }
+        });
     }
-}
-</style>
+});
+</script>
+

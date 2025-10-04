@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -25,7 +26,11 @@ use Magento\Wishlist\Helper\Data;
     $mode = 'grid';
 
     $image = 'new_products_content_widget_grid';
-    $items = $block->getProductCollection()->getItems();
+    $_productCollection = $block->getProductCollection();
+    $_productCollection->addAttributeToSelect('*');
+    $_productCollection->addMediaGalleryData();
+    $items = $_productCollection->getItems();
+
 
     $showWishlist = true;
     $showCompare = true;
@@ -84,20 +89,38 @@ use Magento\Wishlist\Helper\Data;
                                         <img src="<?= $hoverImageUrl ?>" alt="<?= $_item->getName() ?>" class="bv24-hover-img" />
                                     <?php endif; ?>
                                 </a>
+
+
                                 <div data-role="add-to-links" class="bv24-addtolinks">
-                                <?php if ($addToBlock = $block->getChildBlock('addto')): ?>
-                                    <?= $addToBlock->setProduct($_product)->getChildHtml() ?>
-                                <?php endif; ?>
-                            </div>
+                                    <?php if ($this->helper(Data::class)->isAllow() && $showWishlist): ?>
+                                        <a href="#" data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_item) ?>' class="action towishlist" data-action="add-to-wishlist"
+                                            title="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                            <span><?= $escaper->escapeHtml(__('Add to Wish List')) ?></span>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if ($block->getAddToCompareUrl() && $showCompare): ?>
+                                        <?php $compareHelper = $this->helper(Compare::class); ?>
+                                        <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_item) ?>' title="<?=
+                                                                                                                                                                    $escaper->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                            <span><?= $escaper->escapeHtml(__('Add to Compare')) ?></span>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+
+
                             </div>
                             <div class="product-item-details">
                                 <strong class="product-item-name">
                                     <a title="<?= $escaper->escapeHtml($_item->getName()) ?>"
-                                       href="<?= $escaper->escapeUrl($block->getProductUrl($_item)) ?>"
-                                       class="product-item-link">
+                                        href="<?= $escaper->escapeUrl($block->getProductUrl($_item)) ?>"
+                                        class="product-item-link"
+                                        style="font-size: 1.5rem; font-weight: bold; color: #333!important;">
                                         <?= $escaper->escapeHtml($_item->getName()) ?>
                                     </a>
                                 </strong>
+                                <div class="bv24-producttype">
+                                    <span><?= $escaper->escapeHtml($_item->getAttributeText('produkttyp')) ?></span>
+                                </div>
                                 <?php if ($templateType): ?>
                                     <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                                 <?php endif; ?>
@@ -117,21 +140,21 @@ use Magento\Wishlist\Helper\Data;
                                                             <?php $options = $block->getOptionsData($_item); ?>
                                                             <?php foreach ($options as $optionItem): ?>
                                                                 <input type="hidden"
-                                                                       name="<?= $escaper->escapeHtml($optionItem['name']) ?>"
-                                                                       value="<?= $escaper->escapeHtml($optionItem['value']) ?>">
+                                                                    name="<?= $escaper->escapeHtml($optionItem['name']) ?>"
+                                                                    value="<?= $escaper->escapeHtml($optionItem['value']) ?>">
                                                             <?php endforeach; ?>
                                                             <input type="hidden" name="product" value="<?= $escaper->escapeHtmlAttr($postParams['data']['product']) ?>">
                                                             <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
                                                             <?= $block->getBlockHtml('formkey') ?>
                                                             <button type="submit"
-                                                                    title="<?= $escaper->escapeHtml(__('Add to Cart')) ?>"
-                                                                    class="action tocart primary">
+                                                                title="<?= $escaper->escapeHtml(__('Add to Cart')) ?>"
+                                                                class="action tocart primary">
                                                                 <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                                             </button>
                                                         </form>
                                                         <?php if ($block->getBlockHtml('formkey')): ?>
-                                                        <script type="text/x-magento-init">
-                                                        {
+                                                            <script type="text/x-magento-init">
+                                                                {
                                                             "[data-role=tocart-form], .form.map.checkout": {
                                                                 "catalogAddToCart": {
                                                                     "product_sku": "<?= $escaper->escapeJs($_item->getSku()); ?>"
@@ -139,7 +162,7 @@ use Magento\Wishlist\Helper\Data;
                                                             }
                                                         }
                                                         </script>
-                                                        <?php endif;?>
+                                                        <?php endif; ?>
                                                     <?php else: ?>
                                                         <?php if ($_item->isAvailable()): ?>
                                                             <div class="stock available"><span><?= $escaper->escapeHtml(__('In stock')) ?></span></div>
@@ -153,12 +176,12 @@ use Magento\Wishlist\Helper\Data;
                                                 <div class="actions-secondary" data-role="add-to-links">
                                                     <?php if ($this->helper(Data::class)->isAllow() && $showWishlist): ?>
                                                         <a href="#"
-                                                           data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_item) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                                            data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_item) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>">
                                                             <span><?= $escaper->escapeHtml(__('Add to Wish List')) ?></span>
                                                         </a>
                                                     <?php endif; ?>
                                                     <?php if ($block->getAddToCompareUrl() && $showCompare): ?>
-                                                        <?php $compareHelper = $this->helper(Compare::class);?>
+                                                        <?php $compareHelper = $this->helper(Compare::class); ?>
                                                         <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_item) ?>' title="<?= $escaper->escapeHtmlAttr(__('Add to Compare')) ?>">
                                                             <span><?= $escaper->escapeHtml(__('Add to Compare')) ?></span>
                                                         </a>
@@ -173,7 +196,7 @@ use Magento\Wishlist\Helper\Data;
                         <?= ($iterator == count($items) + 1) ? '</li>' : '' ?>
                     <?php endforeach ?>
                 </ol>
-                 <div class="swiper-pagination"></div>
+                <div class="swiper-pagination"></div>
 
                 <!-- If we need navigation buttons -->
                 <div class="swiper-button-prev"></div>
@@ -185,4 +208,4 @@ use Magento\Wishlist\Helper\Data;
             <?= $block->getPagerHtml() ?>
         </div>
     </div>
-<?php endif;?>
+<?php endif; ?>

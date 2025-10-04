@@ -1,0 +1,510 @@
+/**
+ * Megamenu Styles for BV24 Luma Child Theme
+ * Custom CSS for Megamenu Implementation
+ */
+
+/* Desktop Navigation - Level 0 horizontal, Submenüs beim Hover als Liste */
+@media (min-width: 768px) {
+
+    li.level0{
+        position: static !important;
+    }
+
+    /* Navigation Container */
+    .navigation {
+        background: #fff;
+              position: relative;
+    }
+
+    .navigation ul {
+        position: relative !important;
+    }
+
+    /* Level 0 - Hauptkategorien horizontal wie vorher */
+    .navigation .level0 {
+        display: inline-block !important;
+        position: relative;
+        margin: 0 15px 0 0 !important;
+        border-bottom: none;
+    }
+
+    .navigation .level0 > .level-top {
+        display: inline-block !important;
+        padding: 12px 15px;
+        background: transparent;
+        border: none !important;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+        position: relative;
+    }
+
+    .navigation .level0 > .level-top::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #990052, #bb0066);
+        transform: translateX(-50%);
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 2px 2px 0 0;
+    }
+
+    .navigation .level0 > .level-top:hover {
+        color: #990052;
+    }
+
+    .navigation .level0 > .level-top:hover::before {
+        width: 100%;
+    }
+
+    /* Aktive Level 0 Einträge */
+    .navigation .level0.active > .level-top,
+    .navigation .level0.has-active > .level-top {
+        border-bottom: 2px solid #990052;
+    }
+
+    /* Megamenü - große Breite nur für das erste Submenü (Level 1) */
+    .navigation .level0 > .submenu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: 100% !important;
+        min-width: 800px !important;
+        max-width: 90vw !important;
+        margin: 0 !important;
+        padding: 20px !important;
+        background: #fff !important;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        z-index: 1000 !important;
+
+        /* Modern animations */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Submenü beim Hover über Level 0 anzeigen */
+    .navigation .level0:hover > .submenu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Arrows und Hover-Overlay entfernen - nur für das erste Submenü */
+    .navigation .level0 > .submenu:before,
+    .navigation .level0 > .submenu > ul:before,
+    .navigation .level0 > .submenu > ul:after {
+        display: none !important;
+    }
+
+    /* Level 1 - Horizontal anordnen (Hauptkategorien im Megamenü) */
+    .navigation .submenu > li.level1 {
+        display: inline-block !important;
+        vertical-align: top !important;
+        width: 200px !important;
+        margin: 0 10px 20px 0 !important;
+        position: relative;
+        animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation-delay: calc(var(--item-index, 0) * 0.05s);
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    /* Animation für Level 1 Items */
+    @keyframes slideInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Level 1 Links - als Überschriften */
+    .navigation .submenu > li.level1 > a {
+        display: block !important;
+        padding: 10px 15px 8px 15px !important;
+        background: #f8f8f8 !important;
+        border: none !important;
+        border-bottom: 2px solid #990052 !important;
+        color: #333 !important;
+        text-decoration: none;
+        font-weight: bold !important;
+        font-size: 14px;
+        position: relative;
+        margin-bottom: 5px;
+        transition: color 0.2s ease;
+    }
+
+    .navigation .submenu > li.level1 > a:hover {
+        color: #990052 !important;
+    }
+
+    /* Aktive Level 1 Items */
+    .navigation .submenu > li.level1.active > a {
+        background: #990052 !important;
+        color: #fff !important;
+        border-bottom: 2px solid #990052 !important;
+    }
+
+    /* Level 2+ Submenüs - vertikal unter den Level 1 Kategorien */
+    .navigation .submenu > li.level1 .submenu {
+        position: static !important;
+        display: block !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    /* Alle verschachtelten Submenüs */
+    .navigation .submenu .submenu {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+    }
+
+    /* Level 2 Links - unter den Level 1 Überschriften */
+    .navigation .submenu > li.level1 .submenu li {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .navigation .submenu > li.level1 .submenu a {
+        display: block !important;
+        padding: 8px 16px !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        color: #666 !important;
+        text-decoration: none;
+        font-weight: normal !important;
+        font-size: 13px;
+        position: relative;
+        border-radius: 6px;
+        margin: 2px 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navigation .submenu > li.level1 .submenu a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #990052, #bb0066);
+        transform: translateY(-50%);
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 2px;
+    }
+
+    .navigation .submenu > li.level1 .submenu a:hover {
+        background: linear-gradient(135deg, #f9f9f9, #f5f5f5) !important;
+        color: #990052 !important;
+        font-weight: 500;
+        transform: translateX(8px);
+        box-shadow: 0 2px 8px rgba(153, 0, 82, 0.1);
+        border-bottom: 1px solid transparent !important;
+    }
+
+    .navigation .submenu > li.level1 .submenu a:hover::before {
+        width: 4px;
+    }
+
+    /* Level 3 noch weiter einrücken */
+    .navigation .submenu > li.level1 .submenu .submenu a {
+        padding-left: 25px !important;
+        color: #888 !important;
+        font-size: 12px;
+        border-left: 2px solid #f0f0f0;
+    }
+
+    .navigation .submenu > li.level1 .submenu .submenu a:hover {
+        padding-left: 27px !important;
+        color: #990052 !important;
+        border-left: 2px solid #990052;
+    }
+
+    /* Aktive Level 2+ Items */
+    .navigation .submenu > li.level1 .submenu .active > a {
+        background: #f0f0f0 !important;
+        color: #990052 !important;
+        font-weight: bold !important;
+    }
+
+    /* Parent-Icons beibehalten aber anpassen */
+    .navigation .level0.parent > .level-top > .ui-menu-icon {
+        position: absolute;
+        right: 0;
+        font-size: 12px;
+        color: #990052;
+    }
+
+    .navigation .level0.parent > .level-top > .ui-menu-icon:after {            
+            font-size: 3rem!important;
+            font-weight: 600!important;
+        }
+
+        .navigation .level0.parent > .level-top > .ui-menu-icon {
+            right: -8px !important;
+        }
+    
+
+    /* Sub-Level Icons entfernen */
+    .navigation .submenu li.parent > a > .ui-menu-icon {
+        display: none !important;
+    }
+
+    /* Hover-Verhalten für bessere UX */
+    .navigation .level0.parent:hover > .submenu {
+        display: block !important;
+        overflow: visible !important;
+    }
+
+    /* Überschreibe alle JavaScript-generierten Styles für verschachtelte Submenüs */
+    .navigation .submenu .submenu[style] {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        display: block !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Spezifisch für Level 2 Submenüs */
+    .navigation .level1 .level2.submenu[style] {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+    }
+
+    /* Generell alle tief verschachtelten Menüs */
+    .navigation .submenu .submenu .submenu[style] {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+    }
+
+    /* Responsive Verbesserungen */
+    .navigation .level0:hover > .submenu {
+        animation: menuFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes menuFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Gestaffelte Animation für Menüelemente */
+    .navigation .level0:hover > .submenu > li.level1:nth-child(1) { animation-delay: 0.05s; }
+    .navigation .level0:hover > .submenu > li.level1:nth-child(2) { animation-delay: 0.1s; }
+    .navigation .level0:hover > .submenu > li.level1:nth-child(3) { animation-delay: 0.15s; }
+    .navigation .level0:hover > .submenu > li.level1:nth-child(4) { animation-delay: 0.2s; }
+    .navigation .level0:hover > .submenu > li.level1:nth-child(5) { animation-delay: 0.25s; }
+    .navigation .level0:hover > .submenu > li.level1:nth-child(6) { animation-delay: 0.3s; }
+
+    /* Mobile responsiveness für moderne Animationen */
+    @media (max-width: 767px) {
+        .navigation .level0 > .level-top::before,
+        .navigation .level0 > .level-top::after {
+            display: none;
+        }
+
+        .navigation .level0 > .submenu {
+            border-radius: 0;
+            backdrop-filter: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    /* Smooth scroll für bessere UX */
+    .navigation .submenu {
+        scroll-behavior: smooth;
+    }
+
+    /* Loading state animation */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .navigation .level0.loading > .level-top {
+        animation: pulse 1.5s infinite;
+    }
+
+}
+
+/* ========================================== */
+/* SIMPLE CSS-ONLY MOBILE NAVIGATION */
+/* ========================================== */
+
+@media (max-width: 767px) {
+
+    /* Reset desktop megamenu styles for mobile */
+    .navigation .level0 > .submenu {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        background: #fff !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        min-width: auto !important;
+        max-width: none !important;
+        animation: none !important;
+    }
+
+    /* Simple CSS-only collapsible behavior */
+    .navigation .submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    /* Show submenu when expanded class is added */
+    .navigation .level0.parent.expanded > .submenu,
+    .navigation .level1.parent.expanded > .submenu {
+        max-height: 1000px !important; /* Large enough value */
+        display: block !important; /* Force display for Level 0 */
+    }
+
+    /* Level styling */
+    
+
+    .navigation ul.level0 li.level1, .navigation ul.level0 , ul.level0 .all-category{
+        margin-left: 20px;
+    }
+
+    .navigation ul.level0 li.level1:not(:last-child), .navigation ul.level0 , ul.level0 .all-category{
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .navigation .level2 {
+        margin-left: 40px;
+    }
+
+    /* Link styling */
+    .navigation .level0 > .level-top,
+    .navigation .level1 > a,
+    .navigation .level2 > a {
+        display: block;
+        padding: 14px 16px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        position: relative; /* For absolute positioned arrows */
+    }
+
+    .navigation .level1 > a {
+        font-size: 15px;
+        padding-left: 12px;
+    }
+
+    .navigation .level2 > a {
+        color: #666;
+        padding-left: 8px;
+    }
+
+    /* Hover effects */
+    .navigation .level0 > .level-top:hover,
+    .navigation .level1 > a:hover,
+    .navigation .level2 > a:hover {
+        background: #f8f8f8;
+        color: #990052;
+    }
+
+    /* Simple arrow indicators */
+    .navigation .level0.parent > .level-top::after,
+    .navigation .level1.parent > a::after {
+        content: '\e622';
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 35px;
+        color: #990052;
+        transition: transform 0.3s ease;
+        font-family: 'icons-blank-theme';
+        font-weight: 600 !important;
+        line-height: 1;
+    }
+
+    /* Rotate arrow when expanded */
+    .navigation .level0.parent.expanded > .level-top::after,
+    .navigation .level1.parent.expanded > a::after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+    /* Active category styling for mobile */
+    .navigation .level0.active > .level-top,
+    .navigation .level0.has-active > .level-top {
+        border-left: 3px solid #990052 !important;
+        background: rgba(153, 0, 82, 0.05) !important;
+        font-weight: 600 !important;
+    }
+
+    .navigation .level1.active > a,
+    .navigation .level1.has-active > a,
+    .navigation .all-category.active > a {
+        border-left: 3px solid #990052 !important;
+        background: rgba(153, 0, 82, 0.05) !important;
+        font-weight: 600 !important;
+        padding-left: 15px !important; /* Adjust for border */
+    }
+
+    .navigation .level2.active > a,
+    .navigation .level2.has-active > a,
+    .navigation .view-all-link.active > a {
+        border-left: 3px solid #990052 !important;
+        background: rgba(153, 0, 82, 0.05) !important;
+        padding-left: 15px !important; /* Adjust for border */
+    }
+
+    /* Current page indicator */
+    .navigation .level0.current > .level-top,
+    .navigation .level1.current > a,
+    .navigation .level2.current > a {
+        background: linear-gradient(135deg, rgba(153, 0, 82, 0.1), rgba(153, 0, 82, 0.05)) !important;
+        border-left: 4px solid #990052 !important;
+        color: #990052 !important;
+        font-weight: bold !important;
+    }
+
+}
+
+
+.navigation a{
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}

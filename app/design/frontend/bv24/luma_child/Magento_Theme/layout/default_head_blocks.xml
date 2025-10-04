@@ -3,7 +3,11 @@
     <head>
         <css src="css/swiper-bundle.min.css" />
         <script src="js/swiper-bundle.min.js"/>
+        <css src="css/product-box.css"/>
+        <css src="css/search.css"/>
         <css src="css/styles.css"/>
+        <css src="css/page-category.css"/>
+        <css src="css/megamenu.css"/>
         <css src="fonts/remixicon.css"/>
         <script src="js/custom-slick.js"/>
     </head>

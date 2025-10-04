@@ -121,6 +121,9 @@ $_helper = $block->getData('outputHelper');
                                     <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name') ?>
                                 
                             </strong>
+                            <div class="bv24-producttype">
+                                <span><?= $escaper->escapeHtml($_product->getAttributeText('produkttyp')) ?></span>
+                            </div>
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?= /* @noEscape */ $block->getProductPrice($_product) ?>
 
@@ -129,7 +132,7 @@ $_helper = $block->getData('outputHelper');
                             <div class="product-item-inner-mw d-none">
                                 <div class="product actions product-item-actions">
                                     <div class="actions-primary">
-                                        <?php if ($_product->isSaleable()): ?>
+                                        <?php if ($_product->isSaleable()): ?>  
                                             <?php $postParams = $block->getAddToCartPostParams($_product); ?>
                                             <form data-role="tocart-form"
                                                 data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
