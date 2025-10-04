@@ -1,4 +1,3 @@
-
 /* search */
 
 input#minisearch-input-top-search {
@@ -227,7 +226,7 @@ print {
     .header.content:has(.block-search:focus-within) .logo,
     .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
         max-width: 15%;
-    }    
+    }
 }
 
 
@@ -236,53 +235,36 @@ print {
 /* Smartphones (Portrait, < 600px) */
 @media only screen and (max-width: 599px) {
     /* Beispiel: Suchfeld und Logo kleiner */
-    
+
 }
 
-/* Tablets (Portrait, 600px - 899px) */
-@media only screen and (min-width: 600px) and (max-width: 899px) {
-
-    .block-search:has(:focus),
-    .block-search:has(.active) {
-        width: 70vw !important;
-        transition: width 0.2s;
-        position: absolute;
-        right: 10%;
-    }
-
-    .logo {
-        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .header.content:has(.block-search:focus-within) .logo,
-    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
-        max-width: 15%;
-    }    
-    
-}
 
 
 
 
 /* Tablets (Landscape, 900px - 1199px) */
-@media only screen and (min-width: 900px) and (max-width: 1199px) {
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .logo {
+        max-width: 25%;
+    }
+
     .block-search:has(:focus),
     .block-search:has(.active) {
         width: 60vw !important;
         transition: width 0.2s;
         position: absolute;
-        right: 10%;
+        right: 7%;
     }
 
     .logo {
-        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .header.content:has(.block-search:focus-within) .logo,
     .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
         max-width: 20%;
-    }    
-    
+    }
+
 }
 
 /* Desktop (1200px - 1599px) */
@@ -303,11 +285,9 @@ print {
     .header.content:has(.block-search:focus-within) .logo,
     .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
         max-width: 25%;
-    }    
-    
+    }
+
 }
 
 /* Large Desktop (ab 1600px) */
-@media only screen and (min-width: 1600px) {
-    
-}
+@media only screen and (min-width: 1600px) {}
