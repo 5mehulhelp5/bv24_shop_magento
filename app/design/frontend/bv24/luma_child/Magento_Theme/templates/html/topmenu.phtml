@@ -24,19 +24,20 @@ $_menuHtml = $block->getHtml('level-top', 'submenu', $columnsLimit)
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     let isMobileInitialized = false;
+    let isDesktopInitialized = false;
 
-    initializeMobileMenu();
+    initializeMenu();
 
     // Listen for window resize events
     let resizeTimeout;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
-            initializeMobileMenu();
+            initializeMenu();
         }, 250); // Debounce resize events
     });
 
-    function initializeMobileMenu() {
+    function initializeMenu() {
         const isMobile = window.innerWidth <= 767;
 
         if (isMobile && !isMobileInitialized) {
@@ -45,11 +46,31 @@ document.addEventListener('DOMContentLoaded', function() {
             setupMobileToggle();
             expandToActiveCategory();
             isMobileInitialized = true;
-        } else if (!isMobile && isMobileInitialized) {
-            // Clean up mobile functionality when switching to desktop
-            cleanupMobileMenu();
-            isMobileInitialized = false;
+
+            // Clean up desktop when switching to mobile
+            if (isDesktopInitialized) {
+                cleanupDesktopMenu();
+                isDesktopInitialized = false;
+            }
+        } else if (!isMobile && !isDesktopInitialized) {
+            // Initialize desktop functionality
+            addDesktopViewAllLinks();
+            setupDesktopBehavior();
+            isDesktopInitialized = true;
+
+            // Clean up mobile when switching to desktop
+            if (isMobileInitialized) {
+                cleanupMobileMenu();
+                isMobileInitialized = false;
+            }
         }
+    }
+
+    function cleanupDesktopMenu() {
+        // Remove "Alle [Kategorie]" links for desktop
+        document.querySelectorAll('.navigation .desktop-view-all-link').forEach(function(link) {
+            link.remove();
+        });
     }
 
     function cleanupMobileMenu() {
@@ -72,6 +93,106 @@ document.addEventListener('DOMContentLoaded', function() {
         // Restore parent classes that were removed for non-toggleable items
         // This is a bit complex as we would need to track original state
         // For now, we rely on page refresh for full cleanup
+    }
+
+    function addDesktopViewAllLinks() {
+        // Add "Alle [Kategorie]" links nur für Level 0
+        const level0Items = document.querySelectorAll('.navigation .level0.parent');
+
+        level0Items.forEach(function(item) {
+            const parentLink = item.querySelector('.level-top');
+            const submenu = item.querySelector('.submenu');
+
+            if (parentLink && submenu) {
+                const categoryName = parentLink.textContent.trim();
+                const categoryUrl = parentLink.getAttribute('href');
+
+                if (categoryUrl && categoryUrl !== '#') {
+                    // Create "Alle [Kategorie]" link
+                    const viewAllLink = document.createElement('li');
+                    viewAllLink.className = 'level1 desktop-view-all-link';
+                    viewAllLink.innerHTML = `<a href="${categoryUrl}"><strong>Alle ${categoryName}</strong></a>`;
+
+                    // Insert as first child of submenu
+                    submenu.insertBefore(viewAllLink, submenu.firstChild);
+                }
+
+                // Add close button for tablets (only on touch devices)
+                const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                if (isTouchDevice) {
+                    const closeButton = document.createElement('button');
+                    closeButton.className = 'menu-close-btn';
+                    closeButton.innerHTML = '&times;';
+                    closeButton.setAttribute('aria-label', 'Menü schließen');
+
+                    closeButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        item.classList.remove('menu-open');
+                    });
+
+                    submenu.appendChild(closeButton);
+                }
+            }
+        });
+    }
+
+    function setupDesktopBehavior() {
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+        if (isTouchDevice) {
+            // Touch/Tablet: Click-to-toggle
+            const level0Items = document.querySelectorAll('.navigation .level0.parent');
+
+            level0Items.forEach(function(item) {
+                const parentLink = item.querySelector('.level-top');
+
+                if (parentLink) {
+                    // Prevent default link click
+                    parentLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const isOpen = item.classList.contains('menu-open');
+
+                        // Close all other menus
+                        document.querySelectorAll('.navigation .level0.parent').forEach(function(otherItem) {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('menu-open');
+                            }
+                        });
+
+                        // Toggle current menu
+                        if (isOpen) {
+                            item.classList.remove('menu-open');
+                        } else {
+                            item.classList.add('menu-open');
+                        }
+                    });
+                }
+            });
+
+            // Close menus when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.navigation')) {
+                    document.querySelectorAll('.navigation .level0.parent.menu-open').forEach(function(item) {
+                        item.classList.remove('menu-open');
+                    });
+                }
+            });
+        } else {
+            // Desktop mit Maus: Level 0 Links deaktivieren (nur Hover)
+            const level0Links = document.querySelectorAll('.navigation .level0.parent > .level-top');
+
+            level0Links.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+
+                // Add pointer cursor
+                link.style.cursor = 'pointer';
+            });
+        }
     }
 
 

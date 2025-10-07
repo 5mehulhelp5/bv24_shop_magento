@@ -201,42 +201,11 @@ print {
     }
 
 
-    /* input#minisearch-input-top-search:focus+#minisearch-autocomplete-top-search,
-    #minisearch-autocomplete-top-search:hover {
-        display: block !important;
-    }
-
-    #minisearch-autocomplete-top-search {
-        display: none;
-    } 
-
-*/
-    .block-search:has(:focus),
-    .block-search:has(.active) {
-        width: 70vw !important;
-        transition: width 0.2s;
-        position: absolute;
-        right: 10%;
-    }
-
-    .logo {
-        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .header.content:has(.block-search:focus-within) .logo,
-    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
-        max-width: 15%;
-    }
-}
-
-
-/* Media Queries für gängige Bereiche */
-
-/* Smartphones (Portrait, < 600px) */
-@media only screen and (max-width: 599px) {
-    /* Beispiel: Suchfeld und Logo kleiner */
+   
+    
 
 }
+
 
 
 
@@ -250,19 +219,10 @@ print {
 
     .block-search:has(:focus),
     .block-search:has(.active) {
-        width: 60vw !important;
+        width: 65vw !important;
         transition: width 0.2s;
         position: absolute;
         right: 7%;
-    }
-
-    .logo {
-        transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .header.content:has(.block-search:focus-within) .logo,
-    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
-        max-width: 20%;
     }
 
 }
@@ -272,22 +232,24 @@ print {
 
     .block-search:has(:focus),
     .block-search:has(.active) {
-        width: 60vw !important;
+        width: 65vw !important;
         transition: width 0.2s;
         position: absolute;
-        right: 10%;
-    }
-
-    .logo {
-        transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .header.content:has(.block-search:focus-within) .logo,
-    .header.content:has(.block-search #minisearch-autocomplete-top-search:hover) .logo {
-        max-width: 25%;
+        right: 7%;
     }
 
 }
 
 /* Large Desktop (ab 1600px) */
-@media only screen and (min-width: 1600px) {}
+@media only screen and (min-width: 1600px) {
+
+    .block-search:has(:focus),
+    .block-search:has(.active) {
+        width: 60vw !important;
+        transition: width 0.2s;
+        position: absolute;
+        right: 7%;
+    }
+
+
+}
