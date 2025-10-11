@@ -6,6 +6,7 @@
         <script src="js/swiper-bundle.min.js"/>
         <css src="css/product-box.css"/>
         <css src="css/search.css"/>
+        <css src="css/minicard.css"/>
         <css src="css/styles.css"/>
         <css src="css/page-category.css"/>
         <css src="css/megamenu.css"/>

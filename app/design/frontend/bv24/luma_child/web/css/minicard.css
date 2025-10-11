@@ -1,0 +1,35 @@
+.block-minicart {
+    width: 100vw !important;
+    padding: 20px !important;
+    border: none !important;
+    box-shadow: rgba(97, 97, 97, 0.2) 0px 6px 16px 0px !important;
+    border-radius: 5px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    /* Modern animations */
+    transition: all 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    overflow: hidden;
+}
+
+#btn-minicart-close::before {
+    content: "\f057";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: #990052;
+}
+
+
+@media (min-width: 768px) {
+    .block-minicart {
+        width: 60vw !important;
+
+    }
+}
+
+
+.minicart-items-wrapper {
+    height: auto !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+}
